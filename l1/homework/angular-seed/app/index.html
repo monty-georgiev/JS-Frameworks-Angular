@@ -1,16 +1,21 @@
-<!DOCTYPE html>
-<html ng-app="studentsApp">
-<head lang="en">
+<!doctype html>
+<html lang="en" ng-app="studentsApp">
+<head>
     <meta charset="UTF-8">
-    <title>Angular Seed</title>
-    <script src="lib/angular/angular.js"></script>
-    <script src="js/controllers/StudentController.js"></script>
+    <title>Students</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="js/controllers.js"></script>
 </head>
-<body>
-<h1>Students</h1>
-<div ng-controller="StudentsController">
-    {{ greeting }}
-</div>
+<body ng-controller="StudentsController">
+
+
+{{message}}
+
+<!--<ul>-->
+<!--<li ng-repeat="student in students">-->
+<!--<p>{{student.name}}</p>-->
+<!--</li>-->
+<!--</ul>-->
 
 </body>
 </html>
