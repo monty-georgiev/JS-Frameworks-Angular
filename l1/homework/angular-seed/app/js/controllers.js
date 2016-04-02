@@ -1,9 +1,8 @@
-'use strict';
-
-
 var studentsApp = angular.module('studentsApp', []);
 
 studentsApp.controller('StudentsController', function ($scope) {
+    $scope.message = "Hello world";
+
     $scope.students = [
         {
             "name": "Pesho",
@@ -21,5 +20,5 @@ studentsApp.controller('StudentsController', function ($scope) {
         }
     ];
 
-    $scope.message = "Hello world!";
 });
+
