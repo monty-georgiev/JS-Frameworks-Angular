@@ -5,8 +5,24 @@ angular.module('videoSystem', [
     'videoSystem.home',
     'videoSystem.video'
 ]).config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.otherwise({redirectTo: '/'});
-    }])
+    $routeProvider.otherwise({redirectTo: '/'});
+}])
+    .filter('unique', function () {
+        return function (collection, keyname) {
+            var output = [],
+                keys = [];
+
+            angular.forEach(collection, function (item) {
+                var key = item[keyname];
+                if (keys.indexOf(key) === -1) {
+                    keys.push(key);
+                    output.push(item);
+                }
+            });
+
+            return output;
+        };
+    })
     .factory('videoService', function () {
         var mockedVideos = [{
             title: 'Course introduction',
@@ -14,8 +30,8 @@ angular.module('videoSystem', [
             length: '3:32',
             category: 'IT',
             subscribers: 3,
-            date: new Date(2014, 12, 15),
-            haveSubtitles: false,
+            date: new Date(2014, 10, 15),
+            haveSubtitles: true,
             comments: [
                 {
                     username: 'Pesho Peshev',
@@ -32,17 +48,27 @@ angular.module('videoSystem', [
                 length: '2:42',
                 category: 'IT',
                 subscribers: 3,
-                date: new Date(2014, 12, 15),
+                date: new Date(2014, 12, 18),
                 haveSubtitles: false,
                 comments: [
                     {
-                        username: 'Pesho Peshev',
+                        username: 'Gosho Geshev',
                         content: 'Congratulations Nakov',
                         date: new Date(2014, 12, 15, 12, 30, 0),
                         likes: 3,
-                        websiteUrl: 'http://pesho.com/'
+                        websiteUrl: 'http://gosho.com/'
                     }
                 ]
+            },
+            {
+                title: 'Funny',
+                pictureUrl: 'http://www.vetprofessionals.com/catprofessional/images/home-cat.jpg',
+                length: '1:30',
+                category: 'Fun',
+                subscribers: 3,
+                date: new Date(2014, 12, 15),
+                haveSubtitles: true,
+                comments: []
             }
 
         ];
@@ -53,7 +79,8 @@ angular.module('videoSystem', [
         }
 
         function addVideo(video) {
-            console.log(video);
+            mockedVideos.push(video);
+            //console.log(video);
         }
 
 
