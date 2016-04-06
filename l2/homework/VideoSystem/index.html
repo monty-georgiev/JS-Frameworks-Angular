@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="videoSystem" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Video System</title>
+    <meta name="description" content="Video System Homework">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="app/bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="app/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="app/bower_components/html5-boilerplate/dist/css/main.css">
+    <link rel="stylesheet" href="app/css/style.css">
+    <script src="app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="#/" class="navbar-brand">Video System</a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#/">Home</a></li>
+                <li><a href="#/add">Add Video</a></li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div ng-view></div>
+</div>
+
+
+<script src="app/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="app/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="app/bower_components/angular/angular.js"></script>
+<script src="app/bower_components/angular-route/angular-route.js"></script>
+<script src="app/app.js"></script>
+<script src="app/home/homeController.js"></script>
+<script src="app/video/videoController.js"></script>
+</body>
+</html>

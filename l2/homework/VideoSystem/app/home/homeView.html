@@ -1,0 +1,11 @@
+<div class="row">
+
+    <div ng-repeat="video in videos" class="list-group">
+        <a ng-href="#/video/{{video.title}}" class="list-group-item">
+            <h4 class="list-group-item-heading">{{video.title}}</h4>
+            <h6>Category: {{video.category}}</h6>
+            <img ng-src="{{video.pictureUrl}}">
+        </a>
+    </div>
+
+</div>
