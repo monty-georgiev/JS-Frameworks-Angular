@@ -73,7 +73,6 @@ angular.module('videoSystem', [
 
         ];
 
-
         function getAllVideos() {
             return mockedVideos;
         }
@@ -82,8 +81,7 @@ angular.module('videoSystem', [
             mockedVideos.push(video);
             //console.log(video);
         }
-
-
+        
         return {
             getVideos: getAllVideos,
             addVideo: addVideo

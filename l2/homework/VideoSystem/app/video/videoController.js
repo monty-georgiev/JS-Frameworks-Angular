@@ -7,8 +7,7 @@ angular.module('videoSystem.video', [])
     }])
     .controller('VideoController', ['$scope', 'videoService', function VideoController($scope, videoService) {
         $scope.title = "Add video";
-
-
+        
         $scope.addVideo = function (video) {
             videoService.addVideo(video);
         }
