@@ -4,6 +4,7 @@
 angular.module('montyIssueTracker', [
         'ngRoute',
         'angular-loading-bar',
+        'ngAnimate',
         'montyIssueTracker.home'
     ])
     .config(['$routeProvider', function ($routeProvider) {

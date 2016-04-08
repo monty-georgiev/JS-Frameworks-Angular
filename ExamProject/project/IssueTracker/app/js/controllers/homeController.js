@@ -3,7 +3,7 @@
 angular.module('montyIssueTracker.home', [])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {
-            templateUrl: 'app/home/homeView.html',
+            templateUrl: 'app/views/homeView.html',
             controller: 'HomeController'
         });
     }])
