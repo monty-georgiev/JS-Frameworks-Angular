@@ -1,5 +1,62 @@
-<div class="row">
-    <h1>
-        {{msg}}
-    </h1>
+<div class="row" ng-if="!logged">
+    <div class="col-sm-5 col-sm-offset-1">
+
+        <div class="form-box">
+            <div class="form-top">
+                <div class="form-top-left">
+                    <h3>Login</h3>
+                    <p>Enter username and password to log on:</p>
+                </div>
+            </div>
+            <div class="form-bottom">
+                <form name="register-form" method="post" class="login-form">
+                    <div class="form-group">
+                        <input type="text" name="form-username" placeholder="Username..."
+                               class="form-username form-control" id="form-username">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="form-password" placeholder="Password..."
+                               class="form-password form-control" id="form-password">
+                    </div>
+                    <button type="submit" class="btn">Sign in!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-5 col-sm-offset-1">
+        <div class="form-box">
+            <div class="form-top">
+                <div class="form-top-left">
+                    <h3>or Sign up</h3>
+                    <p>Fill in credentials to register:</p>
+                </div>
+                <div class="form-top-right">
+                    <i class="fa fa-pencil"></i>
+                </div>
+            </div>
+            <div class="form-bottom">
+                <form name="register-form" method="post" class="registration-form">
+                    <div class="form-group">
+                        <input type="email" placeholder="Email..." class="form-control"
+                               id="form-email">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="form-first-name" placeholder="Password"
+                               class=" form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="form-last-name" placeholder="Confirm Password"
+                               class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn">Register!</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
 </div>
+<div class="row" ng-if="logged">
+    <p>LOGGED</p>
+</div>
+

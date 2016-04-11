@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="app/css/style.css">
     <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-<body>
+<body ng-cloak>
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -26,14 +26,10 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-            <ul class="nav navbar-nav navbar-right">
+        <div class="navbar-collapse collapse" id="navbar-main" ng-controller="HomeController">
+            <ul class="nav navbar-nav navbar-right" ng-if="logged">
                 <li><a href="#/">Home</a></li>
-                <li><a href="#/">Home</a></li>
-                <li><a href="#/">Home</a></li>
-                <li><a href="#/">Home</a></li>
-                <li><a href="#/">Home</a></li>
-                <li><a href="#/">Home</a></li>
+                <li><a href="#/logout">Logout</a></li>
             </ul>
         </div>
     </div>
@@ -54,5 +50,6 @@
 <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
 <script src="app/js/app.js"></script>
 <script src="app/js/controllers/homeController.js"></script>
+<script src="app/js/controllers/userController.js"></script>
 </body>
 </html>

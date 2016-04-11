@@ -9,5 +9,5 @@ angular.module('montyIssueTracker.home', [])
     }])
 
     .controller('HomeController', ['$scope', function ($scope) {
-        $scope.msg = "KOR";
+        $scope.logged = false;
     }]);
