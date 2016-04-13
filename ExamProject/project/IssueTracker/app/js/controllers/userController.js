@@ -5,10 +5,10 @@ angular.module('montyIssueTracker.user', ['montyIssueTracker.userService.identit
         $scope.logged = false;
 
         $scope.login = function (user) {
-            userService.login(JSON.stringify(user));
+            userService.login(user);
         };
 
         $scope.register = function (user) {
-            userService.register(JSON.stringify(user));
+            userService.register(user);
         };
     }]);

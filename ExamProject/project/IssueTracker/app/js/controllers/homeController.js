@@ -7,7 +7,17 @@ angular.module('montyIssueTracker.home', [])
             controller: 'HomeController'
         });
     }])
-
     .controller('HomeController', ['$scope', function ($scope) {
         $scope.logged = false;
+        $scope.admin = false;
+
+
+        if (sessionStorage.getItem('userToken')) {
+            $scope.logged = true;
+        }
+
+        if (sessionStorage.getItem('isAdmin')) {
+            $scope.admin = true;
+        }
+
     }]);
