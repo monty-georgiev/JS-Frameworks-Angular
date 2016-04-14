@@ -1,8 +1,8 @@
 "use strict";
 
 angular.module('montyIssueTracker.userService.identity', [])
-    .factory('userService', ['$http', '$q', 'BASE_URL', '$route',
-        function ($http, $q, BASE_URL, $route) {
+    .factory('userService', ['$http', '$q', 'BASE_URL',
+        function ($http, $q, BASE_URL) {
             function login(user) {
 
                 var deferred = $q.defer();
@@ -26,10 +26,9 @@ angular.module('montyIssueTracker.userService.identity', [])
                 }).then(function (data) {
                     deferred.resolve(data);
                     sessionStorage.setItem('userToken', data.data.access_token);
-                    $route.reload();
+                    window.location.reload();
                 }, function (err) {
                     deferred.reject(err);
-
                 });
 
                 return deferred.promise;
@@ -52,7 +51,6 @@ angular.module('montyIssueTracker.userService.identity', [])
                 })
                     .then(function (data) {
                         deferred.resolve(data);
-                        console.log(data);
                     }, function (err) {
                         deferred.reject(err.data.ModelState[""][1]);
                     });
@@ -61,7 +59,28 @@ angular.module('montyIssueTracker.userService.identity', [])
             }
 
             function logout() {
+                var deferred = $q.defer();
+                $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
+                console.log(sessionStorage.getItem('userToken'));
+                $http({
+                    method: 'POST',
+                    url: BASE_URL + '/Account/Logout',
+                    transformRequest: function (obj) {
+                        var str = [];
+                        for (var p in obj)
+                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                        return str.join("&");
+                    }
+                })
+                    .then(function (data) {
+                        deferred.resolve(data);
+                        sessionStorage.clear();
+                    }, function (err) {
+                        deferred.reject(err);
+                        console.log(err);
+                    });
 
+                return deferred.promise;
             }
 
             return {
