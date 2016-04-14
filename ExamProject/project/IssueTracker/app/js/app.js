@@ -4,12 +4,22 @@
 angular.module('montyIssueTracker', [
         'ngRoute',
         'ngAnimate',
-        'montyIssueTracker.home',
+        'montyIssueTracker.main',
         'montyIssueTracker.user',
-        'montyIssueTracker.userService.identity'
+        'montyIssueTracker.identity',
+        'montyIssueTracker.directives'
     ])
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.otherwise({redirectTo: '/'});
+        $routeProvider
+            .when('/', {
+                controller: 'MainController',
+                templateUrl: 'app/views/homeView.html'
+            })
+            .when('/logout', {
+                controller: 'LogoutController',
+                templateUrl: 'app/views/homeView.html'
+            })
+            .otherwise({redirectTo: '/'});
     }])
     .constant('BASE_URL', 'http://softuni-issue-tracker.azurewebsites.net/api');
 

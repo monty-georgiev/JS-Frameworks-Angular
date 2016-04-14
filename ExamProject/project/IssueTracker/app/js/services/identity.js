@@ -1,8 +1,8 @@
 "use strict";
 
-angular.module('montyIssueTracker.userService.identity', [])
-    .factory('userService', ['$http', '$q', 'BASE_URL',
-        function ($http, $q, BASE_URL) {
+angular.module('montyIssueTracker.identity', [])
+    .factory('identity', ['$http', '$q', 'BASE_URL', '$rootScope',
+        function ($http, $q, BASE_URL, $rootScope) {
             function login(user) {
 
                 var deferred = $q.defer();
@@ -26,7 +26,7 @@ angular.module('montyIssueTracker.userService.identity', [])
                 }).then(function (data) {
                     deferred.resolve(data);
                     sessionStorage.setItem('userToken', data.data.access_token);
-                    window.location.reload();
+                    $rootScope.logged = true;
                 }, function (err) {
                     deferred.reject(err);
                 });
@@ -61,7 +61,6 @@ angular.module('montyIssueTracker.userService.identity', [])
             function logout() {
                 var deferred = $q.defer();
                 $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
-                console.log(sessionStorage.getItem('userToken'));
                 $http({
                     method: 'POST',
                     url: BASE_URL + '/Account/Logout',
@@ -73,8 +72,9 @@ angular.module('montyIssueTracker.userService.identity', [])
                     }
                 })
                     .then(function (data) {
-                        deferred.resolve(data);
                         sessionStorage.clear();
+                        $rootScope.logged = false;
+                        deferred.resolve(data);
                     }, function (err) {
                         deferred.reject(err);
                         console.log(err);
