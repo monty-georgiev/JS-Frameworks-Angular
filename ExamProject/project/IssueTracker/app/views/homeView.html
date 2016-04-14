@@ -1,4 +1,5 @@
 <div>
+
     <div class="row" ng-if="!logged">
         <div class="col-sm-5 col-sm-offset-1">
 
@@ -93,7 +94,7 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="controls" ng-if="admin">
+            <div class="controls" ng-if="isAdmin">
                 <button class="btn btn-lg btn-success">Add New Project</button>
                 <button class="btn btn-lg btn-success">Add New Issue</button>
             </div>

@@ -1,10 +1,17 @@
 "use strict";
 
 angular.module('montyIssueTracker.main', [])
-    .controller('MainController', ['$scope', '$rootScope', function ($scope, $rootScope) {
-        if ($rootScope.logged) {
-            $scope.logged = true;
-        }
+    .controller('MainController', ['$scope', function ($scope) {
+
+        $scope.$on('isAdmin', function (event, data) {
+            if(data){
+                $scope.isAdmin = true;
+            } else {
+                $scope.isAdmin = false;
+            }
+        });
+
+
     }])
     .controller('LogoutController', [
         '$scope',
