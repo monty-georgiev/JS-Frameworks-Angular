@@ -11,8 +11,10 @@ angular.module('montyIssueTracker.user', [])
             identity.login(user)
                 .then(function () {
                     identity.checkAdmin().then(function (data) {
+                        $rootScope.$broadcast('isLogged', true);
                         if (data.isAdmin) {
                             $rootScope.$broadcast('isAdmin', true);
+
                         } else {
                             $rootScope.$broadcast('isAdmin', false);
                         }

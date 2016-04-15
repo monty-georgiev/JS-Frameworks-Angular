@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('montyIssueTracker.identity', [])
+angular.module('montyIssueTracker.services.identity', [])
     .factory('identity', ['$http', '$q', 'BASE_URL', '$rootScope',
         function ($http, $q, BASE_URL, $rootScope) {
             function login(user) {

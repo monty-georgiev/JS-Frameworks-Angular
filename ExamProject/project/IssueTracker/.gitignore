@@ -3,3 +3,5 @@ node_modules
 bower_components
 
 e2e-tests
+
+config.codekit

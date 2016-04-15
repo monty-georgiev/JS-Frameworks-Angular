@@ -195,11 +195,11 @@
 		"outputStyle": 0,
 		"syntaxCheckerStyle": 0
 		},
-	"\/ExamProject\/project\/IssueTracker\/app\/js\/services\/identity.js": {
+	"\/ExamProject\/project\/IssueTracker\/app\/js\/services\/identity-service.js": {
 		"fileType": 64,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/ExamProject\/project\/IssueTracker\/app\/js\/services\/identity.js",
+		"inputAbbreviatedPath": "\/ExamProject\/project\/IssueTracker\/app\/js\/services\/identity-service.js",
 		"outputAbbreviatedPath": "\/ExamProject\/project\/IssueTracker\/app\/js\/services\/min\/identity-min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,

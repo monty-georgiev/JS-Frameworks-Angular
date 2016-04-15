@@ -1,0 +1,30 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h1>{{issue.Title}}</h1>
+    </div>
+    <div class="panel-body">
+        <p>Project: {{issue.Project.Name}}</p>
+        <p>Description: {{issue.Description}}</p>
+        <p>Author: {{issue.Author.Username}}</p>
+        <p>Assigned to: {{issue.Assignee.Username}}</p>
+        <p>Due by: {{issue.DueDate | date:'dd-MMM-yyyy'}}</p>
+        <ul class="list-inline">
+            <li>Status:</li>
+            <li ng-repeat="status in issue.AvailableStatuses" class="list-group-item list-group-item-warning">
+                {{status.Name}}
+            </li>
+        </ul>
+        <ul class="list-inline" ng-if="issue.Labels.length!==0">
+            <li>Labels:</li>
+            <li ng-repeat="label in issue.Labels" class="list-group-item list-group-item-warning">
+                {{label.Name}}
+            </li>
+        </ul>
+        <ul class="list-inline">
+            <li>Priority:</li>
+            <li class="list-group-item list-group-item-warning {{issue.Priority.Name | lowercase}}">
+                {{issue.Priority.Name}}
+            </li>
+        </ul>
+    </div>
+</div>

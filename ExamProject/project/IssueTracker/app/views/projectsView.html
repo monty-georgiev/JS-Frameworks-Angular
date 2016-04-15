@@ -1,0 +1,19 @@
+<ul class="list-group">
+    <li ng-repeat="project in projects" class="list-group-item">
+        <h3>{{project.Name}}</h3>
+        <p>{{project.Description | limitTo: 100}}&hellip;</p>
+        <p>Owner: {{project.Lead.Username}}</p>
+        <ul class="list-inline">
+            <li>Labels:</li>
+            <li ng-repeat="label in project.Labels" class="list-group-item list-group-item-success">
+                <a href="#">{{label.Name}}</a>
+            </li>
+        </ul>
+        <ul class="list-inline">
+            <li>Priority:</li>
+            <li ng-repeat="priority in project.Priorities" class="list-group-item list-group-item-warning">
+                <a href="#">{{priority.Name}}</a>
+            </li>
+        </ul>
+    </li>
+</ul>

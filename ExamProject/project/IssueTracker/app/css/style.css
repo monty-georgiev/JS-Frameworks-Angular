@@ -47,3 +47,7 @@ body {
     width: auto;
 }
 
+.urgent {
+    background-color: red;
+    color: #FFFFFF;
+}

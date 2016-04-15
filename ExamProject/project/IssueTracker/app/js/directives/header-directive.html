@@ -1,4 +1,4 @@
-<div class="navbar navbar-default navbar-fixed-top">
+<div class="navbar navbar-default navbar-fixed-top" ng-controller="MainController" ng-if="isLogged">
     <div class="container">
         <div class="navbar-header">
             <a href="#/" class="navbar-brand"><img src="app/img/logo.png" class="img-responsive"
@@ -9,9 +9,10 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        <div class="navbar-collapse collapse" id="navbar-main" ng-controller="MainController">
-            <ul class="nav navbar-nav navbar-right" ng-if="logged">
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav navbar-right">
                 <li><a href="#/">Home</a></li>
+                <li><a href="#/projects">Projects</a></li>
                 <li><a href="#/logout">Logout</a></li>
             </ul>
         </div>

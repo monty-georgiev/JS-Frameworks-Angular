@@ -4,11 +4,12 @@ angular.module('montyIssueTracker.main', [])
     .controller('MainController', ['$scope', function ($scope) {
 
         $scope.$on('isAdmin', function (event, data) {
-            if(data){
-                $scope.isAdmin = true;
-            } else {
-                $scope.isAdmin = false;
-            }
+            $scope.isAdmin = data;
+        });
+
+        $scope.$on('isLogged', function (event, data) {
+            $scope.isLogged = data;
+
         });
 
 

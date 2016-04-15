@@ -4,9 +4,14 @@
 angular.module('montyIssueTracker', [
         'ngRoute',
         'ngAnimate',
+        'ngResource',
         'montyIssueTracker.main',
+        'montyIssueTracker.projects',
+        'montyIssueTracker.issues',
         'montyIssueTracker.user',
-        'montyIssueTracker.identity',
+        'montyIssueTracker.services.identity',
+        'montyIssueTracker.services.projects',
+        'montyIssueTracker.services.issues',
         'montyIssueTracker.directives'
     ])
     .config(['$routeProvider', function ($routeProvider) {
@@ -18,6 +23,14 @@ angular.module('montyIssueTracker', [
             .when('/logout', {
                 controller: 'LogoutController',
                 templateUrl: 'app/views/homeView.html'
+            })
+            .when('/projects', {
+                controller: 'ProjectsController',
+                templateUrl: 'app/views/projectsView.html'
+            })
+            .when('/issues/:id', {
+                controller: 'IssuesController',
+                templateUrl: 'app/views/issueView.html'
             })
             .otherwise({redirectTo: '/'});
     }])
