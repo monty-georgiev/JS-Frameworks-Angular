@@ -1,24 +1,24 @@
 "use strict";
 
 angular.module('montyIssueTracker.user', [])
-    .controller('UserController', ['$scope', 'identity', '$rootScope', function ($scope, identity, $rootScope) {
-        if ($rootScope.logged) {
-            $scope.logged = true;
-        }
+    .controller('UserController', ['$scope', '$location', 'identity', function ($scope, $location, identity) {
 
+        var isLogged = Boolean(sessionStorage.getItem('isLogged'));
+        var isAdmin = Boolean(sessionStorage.getItem('isAdmin'));
+
+        $scope.isLogged = isLogged;
+        $scope.isAdmin = isAdmin;
 
         $scope.login = function (user) {
             identity.login(user)
-                .then(function () {
-                    identity.checkAdmin().then(function (data) {
-                        $rootScope.$broadcast('isLogged', true);
-                        if (data.isAdmin) {
-                            $rootScope.$broadcast('isAdmin', true);
-
-                        } else {
-                            $rootScope.$broadcast('isAdmin', false);
-                        }
-                    });
+                .then(function (data) {
+                    sessionStorage.setItem('isLogged', true);
+                    sessionStorage.setItem('userToken', data.data.access_token);
+                    identity.checkAdmin()
+                        .then(function (data) {
+                            sessionStorage.setItem('isAdmin', data.isAdmin);
+                            window.location.reload();
+                        });
                 });
         };
 

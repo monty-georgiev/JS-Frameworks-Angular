@@ -9,4 +9,7 @@
 
 config.codekit
 
-lab/LabSolution/config.codekit
+
+*.codekit
+
+config.codekit

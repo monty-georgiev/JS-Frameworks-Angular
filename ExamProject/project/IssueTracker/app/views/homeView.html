@@ -1,12 +1,12 @@
 <div>
-
-    <div class="row" ng-if="!logged">
+    <div class="row" ng-if="!isLogged">
         <div class="col-sm-5 col-sm-offset-1">
 
             <div class="form-box">
                 <div class="form-top">
                     <div class="form-top-left">
                         <h3>Login</h3>
+
                         <p>Enter username and password to log on:</p>
                     </div>
                 </div>
@@ -23,8 +23,7 @@
                                    required="required">
                         </div>
                         <button type="submit" class="btn btn-success" ng-click="login(loginUser)"
-                                ng-disabled="loginForm.$invalid">Sign
-                            in!
+                                ng-disabled="loginForm.$invalid">Sign in!
                         </button>
                     </form>
                 </div>
@@ -35,6 +34,7 @@
                 <div class="form-top">
                     <div class="form-top-left">
                         <h3>or Sign up</h3>
+
                         <p>Fill in credentials to register:</p>
                     </div>
                     <div class="form-top-right">
@@ -65,7 +65,7 @@
 
         </div>
     </div>
-    <div class="row" ng-if="logged">
+    <div class="row" ng-if="isLogged">
         <div class="jumbotron" style="height: 100%">
             <h1>Dashboard</h1>
             <table class="table table-striped">
@@ -94,11 +94,11 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="controls" ng-if="isAdmin">
-                <button class="btn btn-lg btn-success">Add New Project</button>
-                <button class="btn btn-lg btn-success">Add New Issue</button>
-            </div>
         </div>
+    </div>
+    <div class="row" ng-if="isAdmin">
+        <button class="btn btn-lg btn-success">Add New Project</button>
+        <button class="btn btn-lg btn-success">Add New Issue</button>
     </div>
 
 </div>

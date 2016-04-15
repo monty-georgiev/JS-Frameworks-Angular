@@ -1,8 +1,8 @@
 "use strict";
 
 angular.module('montyIssueTracker.services.identity', [])
-    .factory('identity', ['$http', '$q', 'BASE_URL', '$rootScope',
-        function ($http, $q, BASE_URL, $rootScope) {
+    .factory('identity', ['$http', '$q', 'BASE_URL',
+        function ($http, $q, BASE_URL) {
             function login(user) {
 
                 var deferred = $q.defer();
@@ -25,10 +25,10 @@ angular.module('montyIssueTracker.services.identity', [])
                     data: outputModel
                 }).then(function (data) {
                     deferred.resolve(data);
-                    sessionStorage.setItem('userToken', data.data.access_token);
-                    $rootScope.logged = true;
+                    sessionStorage.setItem('isLogged', true);
                 }, function (err) {
                     deferred.reject(err);
+                    sessionStorage.setItem('isLogged', false);
                 });
 
                 return deferred.promise;
@@ -73,7 +73,6 @@ angular.module('montyIssueTracker.services.identity', [])
                 })
                     .then(function (data) {
                         sessionStorage.clear();
-                        $rootScope.logged = false;
                         deferred.resolve(data);
                     }, function (err) {
                         deferred.reject(err);
@@ -85,8 +84,6 @@ angular.module('montyIssueTracker.services.identity', [])
 
             function checkAdmin() {
                 var deferred = $q.defer();
-
-
                 $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
 
                 $http({
