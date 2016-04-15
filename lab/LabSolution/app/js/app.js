@@ -7,7 +7,7 @@ app.constant('pageSize', 2);
 
 app.config(function ($routeProvider) {
     $routeProvider.when('/', {
-            templateUrl: 'templates/login.html',
+            templateUrl: 'templates/home.html',
             controller: 'HomeController'
         })
         .when('/login', {
