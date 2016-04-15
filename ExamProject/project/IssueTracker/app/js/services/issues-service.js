@@ -4,7 +4,7 @@ angular.module('montyIssueTracker.services.issues', [])
     .factory('issuesService', ['$resource', 'BASE_URL',
         function ($resource, BASE_URL) {
 
-            var issuesResource = $resource(BASE_URL + '/issues/20',
+            var getMyIssues = $resource(BASE_URL + '/issues/me?orderBy=Project.Name&desc&IssueKey&pageSize=2&pageNumber=1',
                 null,
                 {
                     'getAll': {
@@ -13,12 +13,12 @@ angular.module('montyIssueTracker.services.issues', [])
                             'Authorization': 'Bearer ' + sessionStorage.getItem('userToken')
                         }
                     }
-                }
-            );
+                });
 
             return {
-                getProjects: function (params, success, error) {
-                    return issuesResource.getAll(params, success, error);
+                getMyIssues: function (params, success, error) {
+                    return getMyIssues.getAll(params, success, error);
                 }
+
             };
         }]);

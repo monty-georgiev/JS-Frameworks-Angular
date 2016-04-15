@@ -2,15 +2,14 @@
 
 angular.module('montyIssueTracker.issues', [])
     .controller('IssuesController', ['$scope', '$routeParams', 'issuesService', function ($scope, $routeParams, issuesService) {
-        $scope.msg = 'Issues';
-        console.log($routeParams.id);
 
 
-        issuesService.getProjects(null,
-            function success(data) {
-                $scope.issue = data;
-                console.log(data);
-            }, function error(err) {
+        issuesService.getMyIssues(null,
+            function (data) {
+                $scope.issues = data.Issues;
+            },
+            function (err) {
                 console.log(err);
             });
+
     }]);
