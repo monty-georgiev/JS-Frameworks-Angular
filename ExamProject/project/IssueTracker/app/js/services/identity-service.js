@@ -91,8 +91,10 @@ angular.module('montyIssueTracker.services.identity', [])
                     url: BASE_URL + '/users/me'
                 }).then(function (data) {
                     deferred.resolve(data.data);
+                    sessionStorage.setItem('isAdmin', true);
                 }, function (err) {
                     deferred.reject(err);
+                    sessionStorage.setItem('isAdmin', false);
                 });
 
 

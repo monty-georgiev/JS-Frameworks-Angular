@@ -66,14 +66,16 @@
         </div>
     </div>
     <div class="row" ng-if="isLogged">
-        <div class="jumbotron" style="height: 100%" ng-controller="IssuesController">
+        <div class="jumbotron" style="height: 100%">
             <h1>Dashboard</h1>
-            <table class="table table-striped" ng-if="issues.length !== 0">
+
+            <h3>My Issues</h3>
+            <table class="table table-striped" ng-if="issues.length !== 0" ng-controller="IssuesController">
                 <thead>
                 <tr>
-                    <td>Issue</td>
-                    <td>Project</td>
-                    <td>Due Date</td>
+                    <th>Issue</th>
+                    <th>Project</th>
+                    <th>Due Date</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -87,13 +89,31 @@
             <div ng-if="issues.length == 0">
                 No ISSUES
             </div>
+            <h3>My Projects</h3>
+            <table class="table table-striped" ng-if="projects.length !== 0" ng-controller="ProjectsController">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="project in projects">
+                    <td>{{project.Name}}</td>
+                    <td>{{project.Description | limitTo: 40}}</td>
+                    <td><a href="#/projects/{{project.Id}}">View Project</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div ng-if="projects.length == 0">
+                No Projects
+            </div>
         </div>
     </div>
     <div class="row" ng-if="isAdmin">
         <button class="btn btn-lg btn-success">Add New Project</button>
         <button class="btn btn-lg btn-success">Add New Issue</button>
     </div>
-
 </div>
 
 

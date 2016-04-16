@@ -3,8 +3,13 @@
 angular.module('montyIssueTracker.user', [])
     .controller('UserController', ['$scope', '$location', 'identity', function ($scope, $location, identity) {
 
-        var isLogged = Boolean(sessionStorage.getItem('isLogged'));
-        var isAdmin = Boolean(sessionStorage.getItem('isAdmin'));
+        var isLogged = sessionStorage.getItem('isLogged');
+        var isAdmin = sessionStorage.getItem('isAdmin');
+
+        //TODO: WHY DIS WORKS AND BOOLEAN PARSE NOT???
+        if(isAdmin === "false") {
+            isAdmin = false;
+        }
 
         $scope.isLogged = isLogged;
         $scope.isAdmin = isAdmin;
@@ -12,8 +17,10 @@ angular.module('montyIssueTracker.user', [])
         $scope.login = function (user) {
             identity.login(user)
                 .then(function (data) {
+                    console.log(data);
                     sessionStorage.setItem('isLogged', true);
                     sessionStorage.setItem('userToken', data.data.access_token);
+                    sessionStorage.setItem('userName', data.data.userName);
                     identity.checkAdmin()
                         .then(function (data) {
                             sessionStorage.setItem('isAdmin', data.isAdmin);
@@ -21,6 +28,7 @@ angular.module('montyIssueTracker.user', [])
                         });
                 });
         };
+
 
         $scope.register = function (user) {
             identity.register(user)
