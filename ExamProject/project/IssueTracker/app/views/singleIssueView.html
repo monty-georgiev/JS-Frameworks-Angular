@@ -1,0 +1,21 @@
+<div class="jumbotron" style="height: 100%">
+    <h2>{{issue.Title}}</h2>
+
+    <p>{{issue.Description}}</p>
+
+    <p>{{issue.DueDate | date:'dd-MMM-yyyy'}}</p>
+
+    <p>Current Status: {{issue.Status.Name}}</p>
+
+    <div ng-if="isAuthor">
+        <p>Change status</p>
+        <select name="" id="status">
+            <option value="">Change Status</option>
+            <option value="{{status.Name}}" ng-repeat="status in issue.AvailableStatuses">{{status.Name}}</option>
+        </select>
+
+    </div>
+
+
+</div>
+

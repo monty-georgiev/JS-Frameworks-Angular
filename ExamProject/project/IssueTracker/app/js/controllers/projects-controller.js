@@ -10,8 +10,7 @@ angular.module('montyIssueTracker.projects', [])
 
         projectsService.getProjects(null,
             function success(data) {
-                //check for project lead
-                angular.forEach(data, function (value) {
+                angular.forEach(data.Projects, function (value) {
                     if (value.Lead.Username === loggedUsername) {
                         projects.push(value);
                     }

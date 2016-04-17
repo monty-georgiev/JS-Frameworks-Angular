@@ -4,12 +4,11 @@ angular.module('montyIssueTracker.services.projects', [])
     .factory('projectsService', ['$resource', '$q', '$http', 'BASE_URL',
         function ($resource, $q, $http, BASE_URL) {
 
-            var projectsResource = $resource(BASE_URL + '/projects',
+            var projectsResource = $resource(BASE_URL + '/projects?pageSize=1000&pageNumber=1&filter=',
                 null,
                 {
                     'getAll': {
                         method: 'GET',
-                        isArray: true,
                         headers: {
                             'Authorization': 'Bearer ' + sessionStorage.getItem('userToken')
                         }
