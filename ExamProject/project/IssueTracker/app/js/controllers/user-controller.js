@@ -1,30 +1,19 @@
 "use strict";
 
 angular.module('montyIssueTracker.user', [])
-    .controller('UserController', ['$scope', '$location', 'identity', function ($scope, $location, identity) {
-
-        var isLogged = sessionStorage.getItem('isLogged');
-        var isAdmin = sessionStorage.getItem('isAdmin');
-
-        //TODO: WHY DIS WORKS AND BOOLEAN PARSE NOT???
-        if (isAdmin === "false") {
-            isAdmin = false;
-        }
-
-        $scope.isLogged = isLogged;
-        $scope.isAdmin = isAdmin;
+    .controller('UserController', ['$scope', '$location', 'identity', 'notifyService', function ($scope, $location, identity, notifyService) {
 
         $scope.login = function (user) {
             identity.login(user)
                 .then(function (data) {
-                    console.log(data);
                     sessionStorage.setItem('isLogged', true);
                     sessionStorage.setItem('userToken', data.data.access_token);
                     sessionStorage.setItem('userName', data.data.userName);
                     identity.checkAdmin()
                         .then(function (data) {
                             sessionStorage.setItem('isAdmin', data.isAdmin);
-                            window.location.reload();
+                            notifyService.success('Logged in successfully!');
+                            $location.path('/');
                         });
                 });
         };
@@ -41,7 +30,6 @@ angular.module('montyIssueTracker.user', [])
         '$scope',
         function ($scope) {
             $scope.userName = sessionStorage.getItem('userName');
-
 
             $scope.changePassword = function (data) {
                 console.log(data);

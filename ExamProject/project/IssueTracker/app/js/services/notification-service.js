@@ -6,7 +6,7 @@ angular.module('montyIssueTracker.services.notifications', [])
             function successNotification(msg) {
                 noty({
                         text: msg,
-                        type: 'info',
+                        type: 'success',
                         layout: 'topCenter',
                         timeout: 2000
                     }

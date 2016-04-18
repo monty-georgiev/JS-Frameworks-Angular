@@ -7,7 +7,6 @@ angular.module('montyIssueTracker.issues', [])
         issuesService.getMyIssues(null,
             function (data) {
                 $scope.issues = data.Issues;
-                console.log(data.Issues[0])
             },
             function (err) {
                 console.log(err);
@@ -23,8 +22,6 @@ angular.module('montyIssueTracker.issues', [])
                 if (data.Assignee.Username === sessionStorage.getItem('userName')) {
                     $scope.isAuthor = true;
                 }
-
-                console.log(data);
             });
 
         $scope.editIssue = function (issueModel) {

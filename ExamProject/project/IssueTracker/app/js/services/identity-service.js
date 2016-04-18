@@ -3,6 +3,16 @@
 angular.module('montyIssueTracker.services.identity', [])
     .factory('identity', ['$http', '$q', 'BASE_URL',
         function ($http, $q, BASE_URL) {
+
+            function getLoggedIn() {
+                return sessionStorage['isLogged'] != undefined;
+            }
+
+            function getAdmin() {
+                return !!sessionStorage['isAdmin'];
+            }
+
+
             function login(user) {
 
                 var deferred = $q.defer();
@@ -106,6 +116,8 @@ angular.module('montyIssueTracker.services.identity', [])
                 login: login,
                 register: register,
                 logout: logout,
-                checkAdmin: checkAdmin
+                checkAdmin: checkAdmin,
+                getLoggedIn: getLoggedIn,
+                getAdmin: getAdmin
             }
         }]);

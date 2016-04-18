@@ -1,9 +1,9 @@
 "use strict";
 
 angular.module('montyIssueTracker.projects', [])
-    .controller('ProjectsController', ['$scope', 'projectsService', function ($scope, projectsService) {
+    .controller('ProjectsController', ['$scope', 'projectsService', 'identity', function ($scope, projectsService, identity) {
 
-
+        $scope.identity = identity;
         var projects = [];
         var loggedUsername = sessionStorage.getItem('userName');
 

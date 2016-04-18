@@ -4,7 +4,6 @@ angular
         return {
             restrict: 'A',
             replace: true,
-            scope: true,
             templateUrl: 'app/js/directives/header-directive.html'
         };
     });

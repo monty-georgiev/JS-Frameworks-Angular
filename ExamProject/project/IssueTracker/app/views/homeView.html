@@ -1,5 +1,5 @@
 <div>
-    <div class="row" ng-if="!isLogged">
+    <div class="row" ng-if="!identity.getLoggedIn()">
         <div class="col-sm-5 col-sm-offset-1">
 
             <div class="form-box">
@@ -65,57 +65,68 @@
 
         </div>
     </div>
-    <div class="row" ng-if="isLogged" class="fade">
+    <div class="row" ng-if="identity.getLoggedIn()">
         <div class="jumbotron" style="height: 100%">
             <h1>Dashboard</h1>
-
             <h3>My Issues</h3>
-            <table class="table table-striped" ng-if="issues.length !== 0" ng-controller="IssuesController">
-                <thead>
-                <tr>
-                    <th>Project</th>
-                    <th>Issue</th>
-                    <th>Description</th>
+            <div ng-controller="IssuesController">
+                <div ng-if="issues.length == 0">
+                    You have no issues
+                </div>
+                <div ng-if="issues.length !== 0">
 
-                    <th>Due Date</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="issue in issues" class="clickable-row">
-                    <td>{{issue.Project.Name}}</td>
-                    <td>{{issue.Title}}</td>
-                    <td>{{issue.Description | limitTo: 15}}<span ng-if="issue.Description.length > 16">&hellip;</span>
-                    </td>
-                    <td>{{issue.DueDate | date:'dd-MMM-yyyy'}}</td>
-                    <td><a href="#/issues/{{issue.Id}}">View Issue</a></td>
-                </tr>
-                </tbody>
-            </table>
-            <div ng-if="issues.length == 0">
-                No ISSUES
+                    <table class="table table-striped" ng-if="issues.length !== 0">
+                        <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Issue</th>
+                            <th>Description</th>
+
+                            <th>Due Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="issue in issues" class="clickable-row">
+                            <td>{{issue.Project.Name}}</td>
+                            <td>{{issue.Title}}</td>
+                            <td>{{issue.Description | limitTo: 15}}<span
+                                    ng-if="issue.Description.length > 16">&hellip;</span>
+                            </td>
+                            <td>{{issue.DueDate | date:'dd-MMM-yyyy'}}</td>
+                            <td><a href="#/issues/{{issue.Id}}">View Issue</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <h3>My Projects</h3>
-            <table class="table table-striped" ng-if="projects.length !== 0" ng-controller="ProjectsController">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="project in projects">
-                    <td>{{project.Name}}</td>
-                    <td>{{project.Description | limitTo: 20}}<span
-                            ng-if="project.Description.length > 20">&hellip;</span></td>
-                    <td><a href="#/projects/{{project.Id}}">View Project</a></td>
-                </tr>
-                </tbody>
-            </table>
-            <div ng-if="projects.length == 0">
-                No Projects
+
+            <div ng-controller="ProjectsController">
+                <h3>My Projects</h3>
+                <div ng-if="projects.length == 0">
+                    You have no projects.
+                </div>
+                <div ng-if="projects.length !== 0">
+
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="project in projects">
+                            <td>{{project.Name}}</td>
+                            <td>{{project.Description | limitTo: 20}}<span
+                                    ng-if="project.Description.length > 20">&hellip;</span></td>
+                            <td><a href="#/projects/{{project.Id}}">View Project</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="row" ng-if="isAdmin">
+            <div class="row" ng-if="identity.getAdmin()">
                 <button class="btn btn-lg btn-success">Add New Project</button>
                 <button class="btn btn-lg btn-success">Add New Issue</button>
             </div>
