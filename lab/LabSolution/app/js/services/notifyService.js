@@ -1,15 +1,20 @@
 'use strict';
-app.factory('notifyService', function () {
+
+app.factory('notifyService',
+    function () {
         return {
             showInfo: function (msg) {
                 noty({
                         text: msg,
-                        type: 'info', layout: 'topCenter', timeout: 1000
+                        type: 'info',
+                        layout: 'topCenter',
+                        timeout: 1000
                     }
                 );
             },
             showError: function (msg, serverError) {
-                // Collect errors to display from the server response var errors = [];
+                // Collect errors to display from the server response
+                var errors = [];
                 if (serverError && serverError.error_description) {
                     errors.push(serverError.error_description);
                 }
@@ -29,7 +34,9 @@ app.factory('notifyService', function () {
                 }
                 noty({
                         text: msg,
-                        type: 'error', layout: 'topCenter', timeout: 5000
+                        type: 'error',
+                        layout: 'topCenter',
+                        timeout: 5000
                     }
                 );
             }

@@ -5,9 +5,8 @@ app.controller('AppController', ['$scope', 'authService', 'notifyService', funct
 
 
     $scope.logout = function () {
-        authService.logout().then(function () {
-            notifyService.info('Log out successfull!');
-        })
+        authService.logout();
+        notifyService.showInfo('Log out successfull!');
 
     };
 }]);
