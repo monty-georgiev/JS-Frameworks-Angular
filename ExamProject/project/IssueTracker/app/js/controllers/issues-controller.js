@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module('montyIssueTracker.issues', [])
-    .controller('IssuesController', ['$scope', '$routeParams', 'issuesService', function ($scope, $routeParams, issuesService) {
+    .controller('IssuesController', ['$scope', '$routeParams', 'issuesService', 'notifyService', function ($scope, $routeParams, issuesService, notifyService) {
 
 
         issuesService.getMyIssues(null,
@@ -9,7 +9,7 @@ angular.module('montyIssueTracker.issues', [])
                 $scope.issues = data.Issues;
             },
             function (err) {
-                console.log(err);
+                notifyService.error(err.data.Message);
             });
 
     }])

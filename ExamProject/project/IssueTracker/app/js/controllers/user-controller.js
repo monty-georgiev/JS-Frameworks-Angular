@@ -23,6 +23,8 @@ angular.module('montyIssueTracker.user', [])
             identity.register(user)
                 .then(function (registered) {
                     identity.login(registered);
+                }, function (err) {
+                    console.log(err);
                 });
         };
     }])

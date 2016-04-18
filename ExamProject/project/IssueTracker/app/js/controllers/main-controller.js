@@ -17,8 +17,10 @@ angular.module('montyIssueTracker.main', [])
                 .then(function () {
                     $rootScope.$broadcast('logout', true);
                     sessionStorage.clear();
-                    notifyService.success('Logged Out');
+                    notifyService.info('Logged Out');
                     $location.path('/');
+                }, function (err) {
+                    notifyService.error(err.data.Message);
                 })
         }]);
 
