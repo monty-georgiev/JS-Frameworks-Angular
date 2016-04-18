@@ -12,11 +12,11 @@ app.controller('HomeController', [
         $rootScope.showRightSidebar = true;
 
         $scope.adsParams = {
-            'startPage' : 1,
-            'pageSize' : pageSize
+            'startPage': 1,
+            'pageSize': pageSize
         };
 
-        $scope.reloadAds = function() {
+        $scope.reloadAds = function () {
             adsService.getAds(
                 $scope.adsParams,
                 function success(data) {
@@ -27,6 +27,18 @@ app.controller('HomeController', [
                 }
             );
         };
+
+        $scope.$on("categorySelectionChanged", function (event, selectedCategoryId) {
+            $scope.adsParams.categoryId = selectedCategoryId;
+            $scope.adsParams.startPage = 1;
+            $scope.reloadAds();
+        });
+
+        $scope.$on("townSelectionChanged", function (event, selectedTownId) {
+            $scope.adsParams.townId = selectedTownId;
+            $scope.adsParams.startPage = 1;
+            $scope.reloadAds();
+        });
 
         $scope.reloadAds();
     }]);
