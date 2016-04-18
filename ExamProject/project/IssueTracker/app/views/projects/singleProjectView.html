@@ -1,0 +1,36 @@
+<div class="jumbotron" style="height: 100%">
+    <h2 class="text-center">{{project.Name}}</h2>
+    <p class="text-center">{{project.Description}}</p>
+
+    <p class="lead"><strong>Project Lead:</strong> {{project.Lead.Username}}</p>
+    <ul class="list-inline" ng-if="project.Labels.length !== 0">
+        <li>Labels:</li>
+        <li ng-repeat="label in project.Labels">
+            <span class="label label-success">{{label.Name}}</span>
+        </li>
+    </ul>
+    <p>Project Key: {{project.ProjectKey}}</p>
+    <p>Priorities: {{project.PrioritiesAsString}}</p>
+
+
+    <div ng-if="projectIssues.length !==0">
+        <h3>Project Issues</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Issue</th>
+                <th>Project</th>
+                <th>Due Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="issue in projectIssues">
+                <td>{{issue.Title}}</td>
+                <td>{{issue.Description | limitTo: 15}}<span ng-if="issue.Description.length > 14">&hellip;</span></td>
+                <td>{{issue.DueDate | date:'dd-MMM-yyyy'}}</td>
+                <td><a href="#/issues/{{issue.Id}}">View Issue</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

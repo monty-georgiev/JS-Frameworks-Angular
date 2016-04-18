@@ -73,15 +73,19 @@
             <table class="table table-striped" ng-if="issues.length !== 0" ng-controller="IssuesController">
                 <thead>
                 <tr>
-                    <th>Issue</th>
                     <th>Project</th>
+                    <th>Issue</th>
+                    <th>Description</th>
+
                     <th>Due Date</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="issue in issues">
+                <tr ng-repeat="issue in issues" class="clickable-row">
+                    <td>{{issue.Project.Name}}</td>
                     <td>{{issue.Title}}</td>
-                    <td>{{issue.Description | limitTo: 40}}</td>
+                    <td>{{issue.Description | limitTo: 15}}<span ng-if="issue.Description.length > 16">&hellip;</span>
+                    </td>
                     <td>{{issue.DueDate | date:'dd-MMM-yyyy'}}</td>
                     <td><a href="#/issues/{{issue.Id}}">View Issue</a></td>
                 </tr>
@@ -96,12 +100,14 @@
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="project in projects">
                     <td>{{project.Name}}</td>
-                    <td>{{project.Description | limitTo: 40}}</td>
+                    <td>{{project.Description | limitTo: 20}}<span
+                            ng-if="project.Description.length > 20">&hellip;</span></td>
                     <td><a href="#/projects/{{project.Id}}">View Project</a></td>
                 </tr>
                 </tbody>
@@ -109,11 +115,11 @@
             <div ng-if="projects.length == 0">
                 No Projects
             </div>
+            <div class="row" ng-if="isAdmin">
+                <button class="btn btn-lg btn-success">Add New Project</button>
+                <button class="btn btn-lg btn-success">Add New Issue</button>
+            </div>
         </div>
-    </div>
-    <div class="row" ng-if="isAdmin">
-        <button class="btn btn-lg btn-success">Add New Project</button>
-        <button class="btn btn-lg btn-success">Add New Issue</button>
     </div>
 </div>
 

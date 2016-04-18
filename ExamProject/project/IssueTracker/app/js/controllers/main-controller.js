@@ -7,16 +7,26 @@ angular.module('montyIssueTracker.main', [])
         var isAdmin = sessionStorage.getItem('isAdmin');
 
         //TODO: WHY DIS WORKS AND BOOLEAN PARSE NOT???
-        if(isAdmin === "false") {
+        if (isAdmin === "false") {
             isAdmin = false;
         }
 
         $scope.isLogged = isLogged;
         $scope.isAdmin = isAdmin;
 
-        $scope.$on('logout', function () {
-            $scope.isLogged = false;
-            $scope.isAdmin = false;
-        })
+    }])
+    .controller('LogoutController', [
+        '$location',
+        '$rootScope',
+        'identity',
+        'notifyService',
+        function ($location, $rootScope, identity, notifyService) {
+            identity.logout()
+                .then(function () {
+                    $rootScope.$broadcast('logout', true);
+                    sessionStorage.clear();
+                    notifyService.success('Logged Out');
+                    $location.path('/');
+                })
+        }]);
 
-    }]);

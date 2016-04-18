@@ -4,7 +4,7 @@ angular.module('montyIssueTracker.services.issues', [])
     .factory('issuesService', ['$resource', '$q', '$http', 'BASE_URL',
         function ($resource, $q, $http, BASE_URL) {
 
-            var getMyIssues = $resource(BASE_URL + '/issues/me?orderBy=Project.Name&desc&IssueKey&pageSize=1000&pageNumber=1',
+            var getMyIssues = $resource(BASE_URL + '/issues/me?orderBy=DueDate&desc&IssueKey&pageSize=1000&pageNumber=1',
                 null,
                 {
                     'getAll': {

@@ -1,0 +1,32 @@
+<div class="jumbotron" style="height: 100%">
+    <h2 class="text-center">{{issue.Title}}</h2>
+
+    <p class="text-center">{{issue.Description}}</p>
+
+    <p><strong>Project :</strong> {{issue.Project.Name}}</p>
+    <p><strong>Due Date:</strong> {{issue.DueDate | date:'dd-MMM-yyyy'}} <span class="label label-danger">{{issue.Priority.Name}}</span>
+    </p>
+    <p><strong>Assigned to:</strong> {{issue.Assignee.Username}}</p>
+    <p><strong>Created by:</strong> {{issue.Author.Username}}</p>
+    <ul class="list-inline" ng-if="issue.Labels.length !== 0">
+        <li>Labels:</li>
+        <li ng-repeat="label in issue.Labels">
+            <span class="label label-success">{{label.Name}}</span>
+        </li>
+    </ul>
+
+    <p><strong>Current Status:</strong> <span class="label label-default">{{issue.Status.Name}}</span></p>
+
+    <div ng-if="isAuthor">
+        <div class="form-group">
+            <p>Change status:</p>
+            <select name="" id="status" class="form-control">
+                <option value="{{status.Name}}" ng-repeat="status in issue.AvailableStatuses">{{status.Name}}</option>
+            </select>
+            <button class="btn btn-sm btn-success" ng-click="changeStatus">Change Status</button>
+        </div>
+    </div>
+
+
+</div>
+

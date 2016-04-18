@@ -7,7 +7,7 @@ angular.module('montyIssueTracker.user', [])
         var isAdmin = sessionStorage.getItem('isAdmin');
 
         //TODO: WHY DIS WORKS AND BOOLEAN PARSE NOT???
-        if(isAdmin === "false") {
+        if (isAdmin === "false") {
             isAdmin = false;
         }
 
@@ -36,4 +36,14 @@ angular.module('montyIssueTracker.user', [])
                     identity.login(registered);
                 });
         };
-    }]);
+    }])
+    .controller('ProfileController', [
+        '$scope',
+        function ($scope) {
+            $scope.userName = sessionStorage.getItem('userName');
+
+
+            $scope.changePassword = function (data) {
+                console.log(data);
+            }
+        }]);
