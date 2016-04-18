@@ -11,7 +11,7 @@ app.controller('RegisterController', [
 
         $scope.userData = {townId: null};
         $scope.towns = townsService.getTowns();
-        
+
         $scope.register = function (userData) {
             authService.register(userData,
                 function success() {
