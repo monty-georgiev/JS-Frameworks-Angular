@@ -46,9 +46,25 @@ angular.module('montyIssueTracker.services.issues', [])
                     deferred.reject(err);
                 });
 
+                return deferred.promise;
+            }
+
+            function getIssueComments(id) {
+                var deferred = $q.defer();
+                $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
+
+                $http({
+                    method: 'GET',
+                    url: BASE_URL + '/issues/' + id + '/comments'
+                }).then(function (data) {
+                    deferred.resolve(data);
+                }, function (err) {
+                    deferred.reject(err);
+                });
 
                 return deferred.promise;
             }
+
 
             return {
                 getMyIssues: function (params, success, error) {
@@ -59,6 +75,9 @@ angular.module('montyIssueTracker.services.issues', [])
                 },
                 getIssuesByProjectId: function (id) {
                     return getIssuesByProjectId(id);
+                },
+                getIssueComments: function (id) {
+                    return getIssueComments(id);
                 }
 
             };

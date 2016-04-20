@@ -4,22 +4,24 @@
 
     <p class="lead"><strong>Project Lead:</strong> {{project.Lead.Username}}</p>
     <ul class="list-inline" ng-if="project.Labels.length !== 0">
-        <li>Labels:</li>
+        <li><strong>Labels:</strong></li>
         <li ng-repeat="label in project.Labels">
             <span class="label label-success">{{label.Name}}</span>
         </li>
     </ul>
-    <p>Project Key: {{project.ProjectKey}}</p>
-    <p>Priorities: {{project.PrioritiesAsString}}</p>
+    <p><strong>Project Key:</strong> {{project.ProjectKey}}</p>
+    <p><strong>Priorities:</strong> {{project.PrioritiesAsString}}</p>
 
-
+    <div ng-if="isAuthor">
+        <a href="#/issues/add" class="btn btn-lg btn-success">Add New Issue</a>
+    </div>
     <div ng-if="projectIssues.length !==0">
         <h3>Project Issues</h3>
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>Issue</th>
-                <th>Project</th>
+                <th>Description</th>
                 <th>Due Date</th>
             </tr>
             </thead>
@@ -32,5 +34,9 @@
             </tr>
             </tbody>
         </table>
+
+    </div>
+    <div ng-if="projectIssues.length == 0">
+        <h3>No Issues</h3>
     </div>
 </div>

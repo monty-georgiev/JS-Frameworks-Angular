@@ -26,7 +26,12 @@
             <button class="btn btn-sm btn-success" ng-click="changeStatus">Change Status</button>
         </div>
     </div>
-
-
+    <ul class="list-group" ng-if="Comments.length !== 0">
+        <li class="list-group-item"><strong>Comments:</strong></li>
+        <li ng-repeat="comment in Comments" class="list-group-item">
+            <p>{{comment.Text}} by {{comment.Author.Username}}</p>
+            <p>{{comment.CreatedOn | date: 'dd-MMM-yyyy'}}</p>
+        </li>
+    </ul>
 </div>
 

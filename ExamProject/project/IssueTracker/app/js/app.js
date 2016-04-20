@@ -24,33 +24,77 @@ angular.module('montyIssueTracker', [
             })
             .when('/logout', {
                 controller: 'LogoutController',
-                templateUrl: 'app/views/homeView.html'
+                templateUrl: 'app/views/homeView.html',
+                requireLoggedIn: true,
+                requiredAdmin: false
             })
             .when('/profile', {
                 controller: 'ProfileController',
-                templateUrl: 'app/views/user/profileView.html'
+                templateUrl: 'app/views/user/profileView.html',
+                requireLoggedIn: true,
+                requiredAdmin: false
             })
             .when('/profile/password', {
                 controller: 'ProfileController',
-                templateUrl: 'app/views/user/changePasswordView.html'
+                templateUrl: 'app/views/user/changePasswordView.html',
+                requireLoggedIn: true,
+                requiredAdmin: false
+            })
+            .when('/projects/', {
+                controller: 'AllProjectController',
+                templateUrl: 'app/views/projects/allProjectsView.html',
+                requireLoggedIn: true,
+                requiredAdmin: true
+            })
+            .when('/projects/add', {
+                controller: 'AddProjectController',
+                templateUrl: 'app/views/projects/singleProjectEditView.html',
+                requireLoggedIn: true,
+                requiredAdmin: true
             })
             .when('/projects/:id', {
                 controller: 'SingleProjectController',
-                templateUrl: 'app/views/projects/singleProjectView.html'
+                templateUrl: 'app/views/projects/singleProjectView.html',
+                requireLoggedIn: true,
+                requiredAdmin: false
             })
             .when('/projects/:id/edit', {
                 controller: 'SingleProjectController',
-                templateUrl: 'app/views/projects/singleProjectEditView.html'
+                templateUrl: 'app/views/projects/singleProjectEditView.html',
+                requireLoggedIn: true,
+                requiredAdmin: false
+            })
+            .when('/issues/add', {
+                controller: 'AddIssueController',
+                templateUrl: 'app/views/issues/addIssueView.html',
+                requireLoggedIn: true,
+                requiredAdmin: false
             })
             .when('/issues/:id', {
                 controller: 'SingleIssueController',
-                templateUrl: 'app/views/issues/singleIssueView.html'
+                templateUrl: 'app/views/issues/singleIssueView.html',
+                requireLoggedIn: true,
+                requiredAdmin: false
             })
             .when('/issues/:id/edit', {
                 controller: 'SingleIssueController',
-                templateUrl: 'app/views/issues/singleIssueEditView.html'
+                templateUrl: 'app/views/issues/singleIssueEditView.html',
+                requireLoggedIn: true,
+                requiredAdmin: false
             })
             .otherwise({redirectTo: '/'});
     }])
-    .constant('BASE_URL', 'http://softuni-issue-tracker.azurewebsites.net');
+    .run(function ($rootScope, $location, identity) {
+        //non admin users cannot see projects page
+        $rootScope.$on('$routeChangeStart', function (event, next) {
+            if (next.requireLoggedIn && !identity.getLoggedIn()) {
+                $location.path('/');
+            }
+
+            if (next.requiredAdmin && !identity.getAdmin()) {
+                $location.path('/');
+            }
+        });
+    }).constant('BASE_URL', 'http://softuni-issue-tracker.azurewebsites.net');
+
 

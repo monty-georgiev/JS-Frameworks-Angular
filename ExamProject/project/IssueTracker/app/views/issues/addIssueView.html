@@ -1,0 +1,57 @@
+<div class="jumbotron clearfix" style="height: 100%">
+    <h2>Add Issue</h2>
+
+    <form style="width: 48%" class="pull-left">
+        <div class="form-group">
+            <label for="issueTitle">Title</label>
+            <input type="text" class="form-control" id="issueTitle" placeholder="{{issue.Title}}"
+                   ng-model="issue.Title">
+        </div>
+        <div class="form-group">
+            <label for="issueAssignee">Assignee</label>
+            <!--<select class="form-control">-->
+            <!--<option ng-repeat="(id, username) in issue.Assignee">{{username}}</option>-->
+            <!--</select>-->
+            <input type="text" class="form-control" id="issueAssignee" placeholder="{{issue.Assignee.Username}}"
+                   ng-model="issue.Assignee.Username">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Project</label>
+            <select class="form-control">
+                <option>SIT</option>
+                <option>Cart Management</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="issueKey">Issue Key</label>
+            <input type="text" class="form-control" id="issueKey" placeholder="Issue Key" ng-model="issue.IssueKey">
+        </div>
+        <div class="form-group">
+            <label for="issuePriority">Priority</label>
+            <!--<select class="form-control">-->
+            <!--<option>Urgent</option>-->
+            <!--<option>Medium</option>-->
+            <!--</select>-->
+            <input type="text" class="form-control" id="issuePriority" placeholder="{{issue.Priority.Name}}"
+                   ng-model="issue.Priority.Name">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Due Date</label>
+            <input type="text" class="form-control" id="exampleInputEmail1"
+                   ng-model="issue.DueDate">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Labels (comma separated)</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Labels"
+                   value="Softuni, software">
+            <br>
+        </div>
+        <div class="form-group">
+            <label for="issueDescription">Description</label>
+            <textarea class="form-control" id="issueDescription"
+                      placeholder="Description" ng-model="issue.Description"></textarea>
+        </div>
+        <button type=" submit" class="btn btn-success" ng-click="editIssue(issue)">Edit Issue</button>
+    </form>
+</div>
+

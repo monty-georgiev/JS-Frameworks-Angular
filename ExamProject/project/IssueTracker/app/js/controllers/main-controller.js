@@ -5,7 +5,6 @@ angular.module('montyIssueTracker.main', [])
 
         $scope.identity = identity;
 
-
     }])
     .controller('LogoutController', [
         '$location',
@@ -15,7 +14,6 @@ angular.module('montyIssueTracker.main', [])
         function ($location, $rootScope, identity, notifyService) {
             identity.logout()
                 .then(function () {
-                    $rootScope.$broadcast('logout', true);
                     sessionStorage.clear();
                     notifyService.info('Logged Out');
                     $location.path('/');

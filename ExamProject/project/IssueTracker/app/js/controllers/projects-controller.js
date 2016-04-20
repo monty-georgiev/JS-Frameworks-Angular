@@ -23,13 +23,24 @@ angular.module('montyIssueTracker.projects', [])
     .controller('SingleProjectController', [
         '$scope',
         '$routeParams',
+        '$location',
+        'identity',
         'projectsService',
         'issuesService',
-        function ($scope, $routeParams, projectsService, issuesService) {
+        function ($scope, $routeParams, $location, identity, projectsService, issuesService) {
 
 
             projectsService.getProjectById($routeParams.id)
                 .then(function (data) {
+
+                    var currentUser = identity.getUsername();
+
+                    //if user not the author, redirect to home
+                    if (currentUser == data.Lead.Username) {
+                        $scope.isAuthor = true;
+                    } else {
+                        $location.path('/');
+                    }
 
                     var priorities = data.Priorities;
                     var prioritiesArray = [];
@@ -37,15 +48,26 @@ angular.module('montyIssueTracker.projects', [])
                     angular.forEach(priorities, function (priority) {
                         prioritiesArray.push(priority.Name);
                     });
-                    data.PrioritiesAsString = prioritiesArray.join(', ');
 
-                    console.log(data);
+                    data.PrioritiesAsString = prioritiesArray.join(', ');
 
                     $scope.project = data;
                     issuesService.getIssuesByProjectId($routeParams.id)
                         .then(function (data) {
                             $scope.projectIssues = data;
                         });
-
                 });
-        }]);
+        }])
+    .controller('AddProjectController', ['$scope', function ($scope) {
+
+    }])
+    .controller('AllProjectController', ['$scope', 'projectsService', function ($scope, projectsService) {
+
+
+        projectsService.getProjects(null,
+            function success(data) {
+                $scope.projects = data.Projects;
+            }, function error(err) {
+                console.log(err);
+            });
+    }]);

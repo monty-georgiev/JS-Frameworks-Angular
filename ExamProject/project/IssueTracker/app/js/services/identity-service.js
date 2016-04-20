@@ -9,7 +9,11 @@ angular.module('montyIssueTracker.services.identity', [])
             }
 
             function getAdmin() {
-                return !!sessionStorage['isAdmin'];
+                if (sessionStorage['isAdmin'] == 'true') {
+                    return true;
+                }
+
+                return false;
             }
 
 
@@ -112,12 +116,18 @@ angular.module('montyIssueTracker.services.identity', [])
 
             }
 
+
+            function getUsername() {
+                return sessionStorage.getItem('userName');
+            }
+
             return {
                 login: login,
                 register: register,
                 logout: logout,
                 checkAdmin: checkAdmin,
                 getLoggedIn: getLoggedIn,
-                getAdmin: getAdmin
+                getAdmin: getAdmin,
+                getUsername: getUsername
             }
         }]);
