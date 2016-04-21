@@ -16,7 +16,6 @@ angular.module('montyIssueTracker.services.identity', [])
                 return false;
             }
 
-
             function login(user) {
 
                 var deferred = $q.defer();
@@ -111,12 +110,9 @@ angular.module('montyIssueTracker.services.identity', [])
                     sessionStorage.setItem('isAdmin', false);
                 });
 
-
                 return deferred.promise;
-
             }
-
-
+            
             function getUsername() {
                 return sessionStorage.getItem('userName');
             }

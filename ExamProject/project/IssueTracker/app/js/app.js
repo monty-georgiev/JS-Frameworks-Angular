@@ -2,20 +2,20 @@
 
 // Declare app level module which depends on views, and components
 angular.module('montyIssueTracker', [
-        'ngRoute',
-        'ngAnimate',
-        'ngResource',
-        'angular-loading-bar',
-        'montyIssueTracker.main',
-        'montyIssueTracker.projects',
-        'montyIssueTracker.issues',
-        'montyIssueTracker.user',
-        'montyIssueTracker.services.identity',
-        'montyIssueTracker.services.projects',
-        'montyIssueTracker.services.issues',
-        'montyIssueTracker.services.notifications',
-        'montyIssueTracker.directives'
-    ])
+    'ngRoute',
+    'ngAnimate',
+    'ngResource',
+    'angular-loading-bar',
+    'montyIssueTracker.main',
+    'montyIssueTracker.projects',
+    'montyIssueTracker.issues',
+    'montyIssueTracker.user',
+    'montyIssueTracker.services.identity',
+    'montyIssueTracker.services.projects',
+    'montyIssueTracker.services.issues',
+    'montyIssueTracker.services.notifications',
+    'montyIssueTracker.directives'
+])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {
@@ -85,7 +85,7 @@ angular.module('montyIssueTracker', [
             .otherwise({redirectTo: '/'});
     }])
     .run(function ($rootScope, $location, identity) {
-        //non admin users cannot see projects page
+        //restrict routes based on route access
         $rootScope.$on('$routeChangeStart', function (event, next) {
             if (next.requireLoggedIn && !identity.getLoggedIn()) {
                 $location.path('/');
