@@ -2,20 +2,20 @@
 
 // Declare app level module which depends on views, and components
 angular.module('montyIssueTracker', [
-    'ngRoute',
-    'ngAnimate',
-    'ngResource',
-    'angular-loading-bar',
-    'montyIssueTracker.main',
-    'montyIssueTracker.projects',
-    'montyIssueTracker.issues',
-    'montyIssueTracker.user',
-    'montyIssueTracker.services.identity',
-    'montyIssueTracker.services.projects',
-    'montyIssueTracker.services.issues',
-    'montyIssueTracker.services.notifications',
-    'montyIssueTracker.directives'
-])
+        'ngRoute',
+        'ngAnimate',
+        'ngResource',
+        'angular-loading-bar',
+        'montyIssueTracker.main',
+        'montyIssueTracker.projects',
+        'montyIssueTracker.issues',
+        'montyIssueTracker.user',
+        'montyIssueTracker.services.identity',
+        'montyIssueTracker.services.projects',
+        'montyIssueTracker.services.issues',
+        'montyIssueTracker.services.notifications',
+        'montyIssueTracker.directives'
+    ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {
@@ -48,7 +48,7 @@ angular.module('montyIssueTracker', [
             })
             .when('/projects/add', {
                 controller: 'AddProjectController',
-                templateUrl: 'app/views/projects/singleProjectEditView.html',
+                templateUrl: 'app/views/projects/addProjectView.html',
                 requireLoggedIn: true,
                 requiredAdmin: true
             })
@@ -59,12 +59,12 @@ angular.module('montyIssueTracker', [
                 requiredAdmin: false
             })
             .when('/projects/:id/edit', {
-                controller: 'SingleProjectController',
+                controller: 'EditProjectController',
                 templateUrl: 'app/views/projects/singleProjectEditView.html',
                 requireLoggedIn: true,
                 requiredAdmin: false
             })
-            .when('/issues/add', {
+            .when('/projects/:id/add-issue', {
                 controller: 'AddIssueController',
                 templateUrl: 'app/views/issues/addIssueView.html',
                 requireLoggedIn: true,

@@ -35,16 +35,42 @@ angular.module('montyIssueTracker.issues', [])
                     $scope.Comments = response.data;
                 });
 
-
-            $scope.editIssue = function (issueModel) {
-                console.log(issueModel);
-            }
         }])
     .controller('AddIssueController', [
         '$scope',
         '$routeParams',
-        'issuesService',
-        function ($scope, $routeParams, issuesService) {
+        'projectsService',
+        'identity',
+        function ($scope, $routeParams, projectsService, identity) {
+
+            projectsService.getProjectById($routeParams.id)
+                .then(function (response) {
+                    $scope.project = response;
+                    console.log(response);
+                });
+
+            identity.getAllUsernames()
+                .then(function (response) {
+                    $scope.users = response;
+                });
+
+            $scope.addIssue = function (model) {
+                var selectedPriority = document.getElementById('issuePriorities').value;
+                var assigneeId = document.getElementById('issueAssignee').value;
+
+
+                var outputModel = {
+                    Title: model.Title,
+                    Description: model.Description,
+                    DueDate: model.DueDate,
+                    ProjectId: $scope.project.Id,
+                    AssigneeId: assigneeId,
+                    PriorityId: selectedPriority
+                };
+
+
+                console.log(outputModel);
+            }
 
 
         }]);

@@ -29,9 +29,25 @@ angular.module('montyIssueTracker.services.projects', [])
                     deferred.reject(err);
                 });
 
+                return deferred.promise;
+            }
+
+            function updateProjectById(id, data) {
+                var deferred = $q.defer();
+
+                $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
+
+                $http({
+                    method: 'PUT',
+                    url: BASE_URL + '/projects/' + id,
+                    data: data
+                }).then(function (data) {
+                    deferred.resolve(data);
+                }, function (err) {
+                    deferred.reject(err);
+                });
 
                 return deferred.promise;
-
             }
 
             return {
@@ -40,6 +56,9 @@ angular.module('montyIssueTracker.services.projects', [])
                 },
                 getProjectById: function (id) {
                     return getProjectById(id);
+                },
+                updateProjectById: function (id, data) {
+                    return updateProjectById(id, data);
                 }
             };
         }]);

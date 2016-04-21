@@ -4,18 +4,6 @@ angular.module('montyIssueTracker.services.identity', [])
     .factory('identity', ['$http', '$q', 'BASE_URL',
         function ($http, $q, BASE_URL) {
 
-            function getLoggedIn() {
-                return sessionStorage['isLogged'] != undefined;
-            }
-
-            function getAdmin() {
-                if (sessionStorage['isAdmin'] == 'true') {
-                    return true;
-                }
-
-                return false;
-            }
-
             function login(user) {
 
                 var deferred = $q.defer();
@@ -38,10 +26,8 @@ angular.module('montyIssueTracker.services.identity', [])
                     data: outputModel
                 }).then(function (data) {
                     deferred.resolve(data);
-                    sessionStorage.setItem('isLogged', true);
                 }, function (err) {
                     deferred.reject(err);
-                    sessionStorage.setItem('isLogged', false);
                 });
 
                 return deferred.promise;
@@ -112,10 +98,43 @@ angular.module('montyIssueTracker.services.identity', [])
 
                 return deferred.promise;
             }
-            
+
             function getUsername() {
                 return sessionStorage.getItem('userName');
             }
+
+            function getLoggedIn() {
+                if (sessionStorage['isLogged'] == 'true') {
+                    return true;
+                }
+
+                return false;
+            }
+
+            function getAdmin() {
+                if (sessionStorage['isAdmin'] == 'true') {
+                    return true;
+                }
+
+                return false;
+            }
+
+            function getAllUsernames() {
+                var deferred = $q.defer();
+                $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
+
+                $http({
+                    method: 'GET',
+                    url: BASE_URL + '/users'
+                }).then(function (data) {
+                    deferred.resolve(data.data);
+                }, function (err) {
+                    deferred.reject(err);
+                });
+
+                return deferred.promise;
+            }
+
 
             return {
                 login: login,
@@ -124,6 +143,7 @@ angular.module('montyIssueTracker.services.identity', [])
                 checkAdmin: checkAdmin,
                 getLoggedIn: getLoggedIn,
                 getAdmin: getAdmin,
-                getUsername: getUsername
+                getUsername: getUsername,
+                getAllUsernames: getAllUsernames
             }
         }]);
