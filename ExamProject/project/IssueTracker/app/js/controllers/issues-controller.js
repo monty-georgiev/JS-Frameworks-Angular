@@ -25,7 +25,8 @@ angular.module('montyIssueTracker.issues', [])
             issuesService.getIssueById($routeParams.id)
                 .then(function (data) {
                     $scope.issue = data;
-                    if (data.Assignee.Username === sessionStorage.getItem('userName')) {
+                    console.log(data);
+                    if (data.Author.Username === sessionStorage.getItem('userName')) {
                         $scope.isAuthor = true;
                     }
                 });
@@ -40,8 +41,9 @@ angular.module('montyIssueTracker.issues', [])
         '$scope',
         '$routeParams',
         'projectsService',
+        'issuesService',
         'identity',
-        function ($scope, $routeParams, projectsService, identity) {
+        function ($scope, $routeParams, projectsService, issuesService, identity) {
 
             projectsService.getProjectById($routeParams.id)
                 .then(function (response) {
@@ -57,6 +59,15 @@ angular.module('montyIssueTracker.issues', [])
             $scope.addIssue = function (model) {
                 var selectedPriority = document.getElementById('issuePriorities').value;
                 var assigneeId = document.getElementById('issueAssignee').value;
+                var labelsArray = [];
+
+                if (model.LabelsAsString) {
+                    model.LabelsAsString.split(',').forEach(function (label) {
+                        if (label.trim()) {
+                            labelsArray.push({Name: label.trim()});
+                        }
+                    });
+                }
 
 
                 var outputModel = {
@@ -65,11 +76,17 @@ angular.module('montyIssueTracker.issues', [])
                     DueDate: model.DueDate,
                     ProjectId: $scope.project.Id,
                     AssigneeId: assigneeId,
-                    PriorityId: selectedPriority
+                    PriorityId: selectedPriority,
+                    Labels: labelsArray
                 };
 
 
-                console.log(outputModel);
+                issuesService.postIssue(outputModel)
+                    .then(function (data) {
+                        console.log(data);
+                    }, function (err) {
+                        console.log(err);
+                    });
             }
 
 
