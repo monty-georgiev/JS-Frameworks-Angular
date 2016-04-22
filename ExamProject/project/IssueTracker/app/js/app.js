@@ -60,7 +60,7 @@ angular.module('montyIssueTracker', [
             })
             .when('/projects/:id/edit', {
                 controller: 'EditProjectController',
-                templateUrl: 'app/views/projects/singleProjectEditView.html',
+                templateUrl: 'app/views/projects/editProjectView.html',
                 requireLoggedIn: true,
                 requiredAdmin: false
             })
@@ -78,7 +78,7 @@ angular.module('montyIssueTracker', [
             })
             .when('/issues/:id/edit', {
                 controller: 'SingleIssueController',
-                templateUrl: 'app/views/issues/singleIssueEditView.html',
+                templateUrl: 'app/views/issues/editIssueView.html',
                 requireLoggedIn: true,
                 requiredAdmin: false
             })

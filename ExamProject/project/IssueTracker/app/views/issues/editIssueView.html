@@ -1,0 +1,52 @@
+<div class="jumbotron clearfix" style="height: 100%">
+    <h2>Edit Issue</h2>
+
+    <form name="addIssueForm">
+        <div class="form-group">
+            <label for="issueTitle">Title</label>
+            <input type="text" class="form-control" id="issueTitle" placeholder="Issue Title"
+                   ng-model="issue.Title" required="required">
+        </div>
+        <div class="form-group">
+            <label for="issueAssignee">Assignee</label>
+            <select class="form-control" id="issueAssignee">
+                <option ng-repeat="user in users" value="{{user.Id}}">
+                    {{user.Username}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="issueProject">Project</label>
+            <input type="text" class="form-control" ng-disabled="true" value="{{issue.Project.Name}}" id="issueProject">
+        </div>
+        <div class="form-group">
+            <label for="issuePriorities">Priority</label>
+            <select class="form-control" id="issuePriorities">
+                <option value="{{issue.Priority.Id}}">
+                    {{issue.Priority.Name}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="projectDueDate">Due Date</label>
+            <input type="date" class="form-control" id="projectDueDate" placeholder="dd/mm/yyyy"
+                   ng-model="issue.DueDate" required="required">
+        </div>
+        <div class="form-group">
+            <label for="issueLabels">Labels (comma separated)</label>
+            <input type="text" class="form-control" id="issueLabels" placeholder="Labels"
+                   ng-model="issue.LabelsAsString">
+            <br>
+        </div>
+        <div class="form-group">
+            <label for="issueDescription">Description</label>
+            <textarea class="form-control" placeholder="Description" id="issueDescription" ng-model="issue.Description"
+                      required="required" minlength="10"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success" ng-click="editIssue(issue)" ng-disabled="addIssueForm.$invalid">
+            Edit
+            Issue
+        </button>
+    </form>
+</div>
+
