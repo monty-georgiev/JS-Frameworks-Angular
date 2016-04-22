@@ -22,18 +22,27 @@ angular.module('montyIssueTracker.user', [])
         $scope.register = function (user) {
             identity.register(user)
                 .then(function (registered) {
+                    notifyService.success('Registered successfully!');
                     identity.login(registered);
                 }, function (err) {
-                    console.log(err);
+                    notifyService.error(err);
                 });
         };
     }])
     .controller('ProfileController', [
         '$scope',
-        function ($scope) {
+        'identity',
+        'notifyService',
+        function ($scope, identity, notifyService) {
             $scope.userName = sessionStorage.getItem('userName');
 
             $scope.changePassword = function (data) {
-                console.log(data);
+
+                identity.changePassword(data)
+                    .then(function () {
+                        notifyService.success('Password changed!');
+                    }, function (err) {
+                        notifyService.error(err);
+                    })
             }
         }]);

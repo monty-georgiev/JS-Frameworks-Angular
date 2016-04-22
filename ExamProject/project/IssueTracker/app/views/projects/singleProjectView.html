@@ -32,10 +32,10 @@
             </tr>
             </tbody>
         </table>
-        <div ng-if="isAuthor">
-            <a href="#/projects/{{project.Id}}/edit" class="btn btn-lg btn-success">Edit Project</a>
-            <a href="#/projects/{{project.Id}}/add-issue" class="btn btn-lg btn-success">Add New Issue</a>
-        </div>
+    </div>
+    <div ng-if="isAuthor">
+        <a href="#/projects/{{project.Id}}/edit" class="btn btn-lg btn-success">Edit Project</a>
+        <a href="#/projects/{{project.Id}}/add-issue" class="btn btn-lg btn-success">Add New Issue</a>
     </div>
     <div ng-if="projectIssues.length == 0">
         <h3>No Issues</h3>

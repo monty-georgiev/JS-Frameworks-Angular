@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module('montyIssueTracker.projects', [])
-    .controller('ProjectsController', ['$scope', 'projectsService', 'identity', function ($scope, projectsService, identity) {
+    .controller('ProjectsController', ['$scope', 'projectsService', 'identity', 'notifyService', function ($scope, projectsService, identity, notifyService) {
 
         $scope.identity = identity;
         var projects = [];
@@ -17,7 +17,7 @@ angular.module('montyIssueTracker.projects', [])
                 });
                 $scope.projects = projects;
             }, function error(err) {
-                console.log(err);
+                notifyService.error(err);
             });
     }])
     .controller('SingleProjectController', [
@@ -35,7 +35,7 @@ angular.module('montyIssueTracker.projects', [])
 
                     var currentUser = identity.getUsername();
 
-                    if (currentUser == data.Lead.Username) {
+                    if (currentUser === data.Lead.Username) {
                         $scope.isAuthor = true;
                     }
 
@@ -61,8 +61,9 @@ angular.module('montyIssueTracker.projects', [])
         '$routeParams',
         '$location',
         'identity',
+        'notifyService',
         'projectsService',
-        function ($scope, $routeParams, $location, identity, projectsService) {
+        function ($scope, $routeParams, $location, identity, notifyService, projectsService) {
 
             projectsService.getProjectById($routeParams.id)
                 .then(function (data) {
@@ -129,26 +130,87 @@ angular.module('montyIssueTracker.projects', [])
 
                 projectsService.updateProjectById($routeParams.id, outputModel)
                     .then(function () {
+                        notifyService.success('Updated project!');
                         $location.path('/projects/' + $routeParams.id)
+                    }, function (err) {
+                        notifyService.error(err);
                     });
             };
         }])
-    .controller('AddProjectController', ['$scope', 'identity', function ($scope, identity) {
+    .controller('AddProjectController', [
+        '$scope',
+        '$routeParams',
+        '$location',
+        'notifyService',
+        'identity',
+        'projectsService',
+        function ($scope, $routeParams, $location, notifyService, identity, projectsService) {
 
-        identity.getAllUsernames()
-            .then(function (response) {
-                $scope.users = response;
-            });
+            identity.getAllUsernames()
+                .then(function (response) {
+                    $scope.users = response;
+                });
 
+            $scope.addProject = function (project) {
+                var selectedValue = document.getElementById('projectLeader').value;
 
-    }])
-    .controller('AllProjectController', ['$scope', 'projectsService', function ($scope, projectsService) {
+                var labelsArray = [];
+                var prioritiesArray = [];
 
+                project.LabelsAsString.split(',').forEach(function (label) {
+                    if (label.trim()) {
+                        labelsArray.push({Name: label.trim()});
+                    }
+                });
+
+                project.PrioritiesAsString.split(',').forEach(function (priority) {
+                    if (priority.trim()) {
+                        prioritiesArray.push({Name: priority.trim()});
+                    }
+                });
+
+                var outputModel = {
+                    Name: project.Name,
+                    Description: project.Description,
+                    Labels: labelsArray,
+                    ProjectKey: project.ProjectKey,
+                    Priorities: prioritiesArray,
+                    LeadId: selectedValue
+                };
+
+                projectsService.addProject(outputModel)
+                    .then(function () {
+                        notifyService.success('Project created!');
+                        $location.path('/')
+                    }, function (err) {
+                        notifyService.error(err);
+                    });
+            };
+
+            $scope.saveEditProject = function () {
+                var selectedValue = document.getElementById('projectLeader').value;
+
+                var outputModel = {
+                    Name: $scope.project.Name,
+                    Description: $scope.project.Description,
+                    Labels: labelsArray,
+                    Priorities: prioritiesArray,
+                    LeadId: selectedValue
+                };
+
+                projectsService.updateProjectById($routeParams.id, outputModel)
+                    .then(function () {
+                        $location.path('/projects/' + $routeParams.id);
+                        notifyService.success('Project added');
+                    });
+            };
+        }])
+    .controller('AllProjectController', ['$scope', 'projectsService', 'notifyService', function ($scope, projectsService, notifyService) {
 
         projectsService.getProjects(null,
             function success(data) {
                 $scope.projects = data.Projects;
             }, function error(err) {
-                console.log(err);
+                notifyService.error(err);
             });
     }]);

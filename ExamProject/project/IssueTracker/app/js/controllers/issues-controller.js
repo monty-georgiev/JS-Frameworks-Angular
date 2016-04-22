@@ -36,16 +36,18 @@ angular.module('montyIssueTracker.issues', [])
                     });
                     $scope.issue.LabelsAsString = labelsArray.join(', ');
 
-
-                    console.log(data);
                     if (data.Author.Username === sessionStorage.getItem('userName')) {
                         $scope.isAuthor = true;
                     }
 
                     if (data.Assignee.Username === sessionStorage.getItem('userName')) {
                         $scope.isAssignee = true;
-                    }
 
+                        //hide menu if status is closed and no other options;
+                        if (data.Status.Name == 'Closed') {
+                            $scope.isAssignee = false;
+                        }
+                    }
                 });
 
             issuesService.getIssueComments($routeParams.id)
@@ -58,9 +60,19 @@ angular.module('montyIssueTracker.issues', [])
                     $scope.users = data;
                 });
 
+            $scope.changeStatus = function () {
+                var status = document.getElementById('issueStatus').value;
+
+                issuesService.changeIssueStatus($routeParams.id, status)
+                    .then(function (response) {
+                        $location.path('/issues/' + $routeParams.id);
+                        notifyService.success('Status changed!');
+                    }, function (err) {
+                        notifyService.error(err);
+                    });
+            };
+
             $scope.editIssue = function (issue) {
-
-
                 var selectedPriority = document.getElementById('issuePriorities').value;
                 var assigneeId = document.getElementById('issueAssignee').value;
                 var labelsArray = [];
@@ -88,18 +100,19 @@ angular.module('montyIssueTracker.issues', [])
                         $location.path('/issues/' + $routeParams.id);
                         notifyService.success('Issue edit successful!')
                     }, function (err) {
-                        console.log(err);
+                        notifyService.error(err);
                     })
             }
-
         }])
     .controller('AddIssueController', [
         '$scope',
         '$routeParams',
+        '$location',
         'projectsService',
         'issuesService',
+        'notifyService',
         'identity',
-        function ($scope, $routeParams, projectsService, issuesService, identity) {
+        function ($scope, $routeParams, $location, projectsService, issuesService, notifyService, identity) {
 
             projectsService.getProjectById($routeParams.id)
                 .then(function (response) {
@@ -125,7 +138,6 @@ angular.module('montyIssueTracker.issues', [])
                     });
                 }
 
-
                 var outputModel = {
                     Title: model.Title,
                     Description: model.Description,
@@ -136,12 +148,12 @@ angular.module('montyIssueTracker.issues', [])
                     Labels: labelsArray
                 };
 
-
                 issuesService.postIssue(outputModel)
-                    .then(function (data) {
-                        console.log(data);
+                    .then(function () {
+                        notifyService.success('Issue created');
+                        $location.path('/project/' + $routeParams.id)
                     }, function (err) {
-                        console.log(err);
+                        notifyService.error(err);
                     });
             }
         }]);

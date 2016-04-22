@@ -59,10 +59,11 @@ angular.module('montyIssueTracker.services.identity', [])
 
             function logout() {
                 var deferred = $q.defer();
-                $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
+
                 $http({
                     method: 'POST',
                     url: BASE_URL + '/api/Account/Logout',
+                    headers: getHeaders(),
                     transformRequest: function (obj) {
                         var str = [];
                         for (var p in obj)
@@ -83,11 +84,11 @@ angular.module('montyIssueTracker.services.identity', [])
 
             function checkAdmin() {
                 var deferred = $q.defer();
-                $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
 
                 $http({
                     method: 'GET',
-                    url: BASE_URL + '/users/me'
+                    url: BASE_URL + '/users/me',
+                    headers: getHeaders()
                 }).then(function (data) {
                     deferred.resolve(data.data);
                     sessionStorage.setItem('isAdmin', true);
@@ -121,11 +122,11 @@ angular.module('montyIssueTracker.services.identity', [])
 
             function getAllUsernames() {
                 var deferred = $q.defer();
-                $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
 
                 $http({
                     method: 'GET',
-                    url: BASE_URL + '/users'
+                    url: BASE_URL + '/users',
+                    headers: getHeaders()
                 }).then(function (data) {
                     deferred.resolve(data.data);
                 }, function (err) {
@@ -135,15 +136,63 @@ angular.module('montyIssueTracker.services.identity', [])
                 return deferred.promise;
             }
 
+            function changePassword(passObject) {
+                var deferred = $q.defer();
+
+                $http({
+                    method: 'POST',
+                    url: BASE_URL + '/api/Account/ChangePassword',
+                    data: JSON.stringify(passObject),
+                    headers: getHeaders()
+
+                }).then(function (data) {
+                    deferred.resolve(data.data);
+                }, function (err) {
+                    deferred.reject(err);
+                });
+
+                return deferred.promise;
+            }
+
+            function getHeaders() {
+                var headers = {};
+                var logged = getLoggedIn();
+                if (logged) {
+                    headers['Authorization'] = 'Bearer ' + sessionStorage.getItem('userToken');
+                }
+                return headers;
+            }
 
             return {
-                login: login,
-                register: register,
-                logout: logout,
-                checkAdmin: checkAdmin,
-                getLoggedIn: getLoggedIn,
-                getAdmin: getAdmin,
-                getUsername: getUsername,
-                getAllUsernames: getAllUsernames
-            }
+                login: function (user) {
+                    return login(user);
+                },
+                register: function (user) {
+                    return register(user);
+                },
+                logout: function () {
+                    return logout();
+                },
+                checkAdmin: function () {
+                    return checkAdmin();
+                },
+                getLoggedIn: function () {
+                    return getLoggedIn();
+                },
+                getAdmin: function () {
+                    return getAdmin();
+                },
+                getUsername: function () {
+                    return getUsername();
+                },
+                getAllUsernames: function () {
+                    return getAllUsernames()
+                },
+                changePassword: function (passObject) {
+                    return changePassword(passObject);
+                },
+                getHeaders: function () {
+                    return getHeaders();
+                }
+            };
         }]);

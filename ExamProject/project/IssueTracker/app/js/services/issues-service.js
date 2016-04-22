@@ -1,27 +1,26 @@
 "use strict";
 
 angular.module('montyIssueTracker.services.issues', [])
-    .factory('issuesService', ['$resource', '$q', '$http', 'BASE_URL',
-        function ($resource, $q, $http, BASE_URL) {
+    .factory('issuesService', ['$resource', '$q', '$http', 'identity', 'BASE_URL',
+        function ($resource, $q, $http, identity, BASE_URL) {
 
             var getMyIssues = $resource(BASE_URL + '/issues/me?orderBy=DueDate&desc&IssueKey&pageSize=1000&pageNumber=1',
                 null,
                 {
                     'getAll': {
                         method: 'GET',
-                        headers: {
-                            'Authorization': 'Bearer ' + sessionStorage.getItem('userToken')
-                        }
+                        headers: identity.getHeaders()
                     }
                 });
 
             function getIssueById(id) {
                 var deferred = $q.defer();
-                $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
+
 
                 $http({
                     method: 'GET',
-                    url: BASE_URL + '/issues/' + id
+                    url: BASE_URL + '/issues/' + id,
+                    headers: identity.getHeaders()
                 }).then(function (data) {
                     deferred.resolve(data.data);
                 }, function (err) {
@@ -35,11 +34,12 @@ angular.module('montyIssueTracker.services.issues', [])
 
             function getIssuesByProjectId(id) {
                 var deferred = $q.defer();
-                $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
+
 
                 $http({
                     method: 'GET',
-                    url: BASE_URL + '/projects/' + id + '/issues'
+                    url: BASE_URL + '/projects/' + id + '/issues',
+                    headers: identity.getHeaders()
                 }).then(function (data) {
                     deferred.resolve(data.data);
                 }, function (err) {
@@ -51,11 +51,11 @@ angular.module('montyIssueTracker.services.issues', [])
 
             function getIssueComments(id) {
                 var deferred = $q.defer();
-                $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
 
                 $http({
                     method: 'GET',
-                    url: BASE_URL + '/issues/' + id + '/comments'
+                    url: BASE_URL + '/issues/' + id + '/comments',
+                    headers: identity.getHeaders()
                 }).then(function (data) {
                     deferred.resolve(data);
                 }, function (err) {
@@ -68,12 +68,12 @@ angular.module('montyIssueTracker.services.issues', [])
             function postIssue(issue) {
                 var deferred = $q.defer();
 
-                $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
 
                 $http({
                     method: 'POST',
                     url: BASE_URL + '/issues/',
-                    data: issue
+                    data: issue,
+                    headers: identity.getHeaders()
                 }).then(function (data) {
                     deferred.resolve(data);
                 }, function (err) {
@@ -87,12 +87,11 @@ angular.module('montyIssueTracker.services.issues', [])
             function editIssue(id, issue) {
                 var deferred = $q.defer();
 
-                $http.defaults.headers.common.Authorization = 'Bearer ' + sessionStorage.getItem('userToken');
-
                 $http({
                     method: 'PUT',
                     url: BASE_URL + '/issues/' + id,
-                    data: issue
+                    data: issue,
+                    headers: identity.getHeaders()
                 }).then(function (data) {
                     deferred.resolve(data);
                 }, function (err) {
@@ -100,7 +99,22 @@ angular.module('montyIssueTracker.services.issues', [])
                 });
 
                 return deferred.promise;
+            }
 
+            function changeIssueStatus(id, statusId) {
+                var deferred = $q.defer();
+
+                $http({
+                    method: 'PUT',
+                    url: BASE_URL + '/issues/' + id + '/changestatus?statusid=' + statusId,
+                    headers: identity.getHeaders()
+                }).then(function (data) {
+                    deferred.resolve(data);
+                }, function (err) {
+                    deferred.reject(err);
+                });
+
+                return deferred.promise;
             }
 
 
@@ -122,6 +136,9 @@ angular.module('montyIssueTracker.services.issues', [])
                 },
                 editIssue: function (id, issue) {
                     return editIssue(id, issue);
+                },
+                changeIssueStatus: function (id, statusId) {
+                    return changeIssueStatus(id, statusId);
                 }
 
             };
