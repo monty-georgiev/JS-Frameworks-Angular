@@ -5,7 +5,6 @@ angular
     .controller('MainController', ['$scope', 'identity', MainController])
     .controller('LogoutController', ['$location', 'identity', 'notifyService', LogoutController]);
 
-
 function MainController($scope, identity) {
     $scope.identity = identity;
 }

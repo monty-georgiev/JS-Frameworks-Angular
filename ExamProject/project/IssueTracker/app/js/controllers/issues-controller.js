@@ -6,7 +6,6 @@ angular
     .controller('SingleIssueController', ['$scope', '$routeParams', '$location', 'issuesService', 'projectsService', 'notifyService', 'identity', SingleIssueController])
     .controller('AddIssueController', ['$scope', '$routeParams', '$location', 'projectsService', 'issuesService', 'notifyService', 'identity', AddIssueController]);
 
-
 function IssueController($scope, issuesService, notifyService) {
     issuesService.getMyIssues(null,
         function (data) {

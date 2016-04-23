@@ -3,17 +3,19 @@
 angular
     .module('montyIssueTracker.user', [])
     .controller('UserController', ['$scope', '$location', 'identity', 'notifyService', UserController])
-    .controller('ProfileController', ['$scope', 'identity', 'notifyService', ProfileController]);
+    .controller('ProfileController', ['$scope', '$location', 'identity', 'notifyService', ProfileController]);
 
-function ProfileController($scope, identity, notifyService) {
+function ProfileController($scope, $location, identity, notifyService) {
     $scope.userName = sessionStorage.getItem('userName');
 
-    $scope.changePassword = function (data) {
-        identity.changePassword(data)
+    $scope.changePassword = function (passObject) {
+
+        identity.changePassword(passObject)
             .then(function () {
                 notifyService.success('Password changed!');
+                $location.path('/profile');
             }, function (err) {
-                notifyService.error(err);
+                //notifyService.error(err.data.Message);
             })
     }
 }
@@ -31,6 +33,8 @@ function UserController($scope, $location, identity, notifyService) {
                         notifyService.success('Logged in successfully!');
                         $location.path('/');
                     });
+            }, function (err) {
+                notifyService.error(err.data.error_description)
             });
     };
 

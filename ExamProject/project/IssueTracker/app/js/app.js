@@ -35,7 +35,6 @@ function runConfig($rootScope, $location, identity) {
     });
 }
 
-
 function routeProvider($routeProvider) {
     $routeProvider
         .when('/', {
