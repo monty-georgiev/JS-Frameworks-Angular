@@ -118,7 +118,6 @@ function AddIssueController($scope, $routeParams, $location, projectsService, is
     projectsService.getProjectById($routeParams.id)
         .then(function (response) {
             $scope.project = response;
-            console.log(response);
         });
 
     identity.getAllUsernames()
