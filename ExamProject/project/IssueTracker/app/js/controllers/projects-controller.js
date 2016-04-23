@@ -19,6 +19,7 @@ function AllProjectController($scope, projectsService, notifyService) {
 }
 
 function ProjectsController($scope, projectsService, identity, notifyService) {
+
     $scope.identity = identity;
     var projects = [];
     var loggedUsername = sessionStorage.getItem('userName');

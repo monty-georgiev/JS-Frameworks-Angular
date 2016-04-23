@@ -3,7 +3,7 @@
 angular
     .module('montyIssueTracker.issues', [])
     .controller('IssuesController', ['$scope', 'issuesService', 'notifyService', IssueController])
-    .controller('SingleIssueController', ['$scope', '$routeParams', '$location', 'issuesService', 'notifyService', 'identity', SingleIssueController])
+    .controller('SingleIssueController', ['$scope', '$routeParams', '$location', 'issuesService', 'projectsService', 'notifyService', 'identity', SingleIssueController])
     .controller('AddIssueController', ['$scope', '$routeParams', '$location', 'projectsService', 'issuesService', 'notifyService', 'identity', AddIssueController]);
 
 
@@ -17,10 +17,15 @@ function IssueController($scope, issuesService, notifyService) {
         });
 }
 
-function SingleIssueController($scope, $routeParams, $location, issuesService, notifyService, identity) {
+function SingleIssueController($scope, $routeParams, $location, issuesService, projectsService, notifyService, identity) {
     issuesService.getIssueById($routeParams.id)
         .then(function (data) {
             $scope.issue = data;
+
+            projectsService.getProjectById(data.Project.Id)
+                .then(function (response) {
+                    $scope.canAddComments = identity.getUsername() == response.Lead.Username;
+                });
             $scope.issue.DueDate = new Date(data.DueDate);
             var labelsArray = [];
 
@@ -29,11 +34,11 @@ function SingleIssueController($scope, $routeParams, $location, issuesService, n
             });
             $scope.issue.LabelsAsString = labelsArray.join(', ');
 
-            if (data.Author.Username === sessionStorage.getItem('userName')) {
+            if (data.Author.Username === identity.getUsername()) {
                 $scope.isAuthor = true;
             }
 
-            if (data.Assignee.Username === sessionStorage.getItem('userName')) {
+            if (data.Assignee.Username === identity.getUsername()) {
                 $scope.isAssignee = true;
 
                 //hide menu if status is closed and no other options;
@@ -42,6 +47,7 @@ function SingleIssueController($scope, $routeParams, $location, issuesService, n
                 }
             }
         });
+
 
     issuesService.getIssueComments($routeParams.id)
         .then(function (response) {
@@ -63,6 +69,16 @@ function SingleIssueController($scope, $routeParams, $location, issuesService, n
             }, function (err) {
                 notifyService.error(err);
             });
+    };
+
+    $scope.addCommentToIssue = function (comment) {
+        issuesService.addCommentToIssue($routeParams.id, comment)
+            .then(function () {
+                notifyService.success("Comment added. Please reload cause i cant figure out how to display the comment below!");
+                $location.path('/issues/' + $routeParams.id);
+            }, function (err) {
+                notifyService.error(err);
+            })
     };
 
     $scope.editIssue = function (issue) {

@@ -68,7 +68,9 @@
     <div class="row" ng-if="identity.getLoggedIn()">
         <div class="jumbotron" style="height: 100%">
             <h1>Dashboard</h1>
+
             <h3>My Issues</h3>
+
             <div ng-controller="IssuesController">
                 <div ng-if="issues.length == 0">
                     You have no issues
@@ -102,6 +104,7 @@
 
             <div ng-controller="ProjectsController">
                 <h3>My Projects</h3>
+
                 <div ng-if="projects.length == 0">
                     You have no projects.
                 </div>
@@ -126,6 +129,7 @@
                     </table>
                 </div>
             </div>
+
             <div class="row" ng-if="identity.getAdmin()">
                 <a href="#/projects/add" class="btn btn-lg btn-success">Add New Project</a>
             </div>

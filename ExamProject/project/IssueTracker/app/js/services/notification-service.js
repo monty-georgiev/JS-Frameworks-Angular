@@ -5,40 +5,35 @@ angular
     .factory('notifyService', [notifyService]);
 
 function notifyService() {
-    function successNotification(msg) {
-        noty({
-                text: msg,
-                type: 'success',
-                layout: 'topCenter',
-                timeout: 2000
-            }
-        );
-    }
-
-    function errorNotification(msg) {
-        noty({
-                text: msg,
-                type: 'error',
-                layout: 'topCenter',
-                timeout: 3000
-            }
-        );
-    }
-
-    function infoNotification(msg) {
-        noty({
-                text: msg,
-                type: 'confirm',
-                layout: 'topCenter',
-                timeout: 1000
-            }
-        );
-    }
 
     return {
-        success: successNotification,
-        error: errorNotification,
-        info: infoNotification
+        success: function (msg) {
+            noty({
+                    text: msg,
+                    type: 'success',
+                    layout: 'topCenter',
+                    timeout: 3000
+                }
+            );
+        },
+        error: function (msg) {
+            noty({
+                    text: msg,
+                    type: 'error',
+                    layout: 'topCenter',
+                    timeout: 3000
+                }
+            );
+        },
+        info: function (msg) {
+            noty({
+                    text: msg,
+                    type: 'confirm',
+                    layout: 'topCenter',
+                    timeout: 1500
+                }
+            );
+        }
     }
 }
 

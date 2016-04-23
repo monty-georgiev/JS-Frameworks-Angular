@@ -34,6 +34,22 @@
     <div ng-if="isAuthor">
         <a href="#/issues/{{issue.Id}}/edit" class="btn btn-sm btn-success">Edit Issue</a>
     </div>
+    <br/>
+
+    <div ng-if="canAddComments">
+        <form name="addComment">
+            <div class="form-group">
+                <label for="addComment">Add comment:</label>
+                <textarea type="text" class="form-control" id="addComment" ng-model="comment.Text" minlength="3"
+                          required="required"></textarea>
+            </div>
+            <button class="btn btn-success" ng-click="addCommentToIssue(comment)" ng-disabled="addComment.$invalid">Add
+                comment
+            </button>
+        </form>
+
+    </div>
+    <br/>
     <ul class="list-group" ng-if="Comments.length !== 0">
         <li class="list-group-item"><strong>Comments:</strong></li>
         <li ng-repeat="comment in Comments" class="list-group-item">
