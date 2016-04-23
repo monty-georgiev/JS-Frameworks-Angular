@@ -1,7 +1,8 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
-angular.module('montyIssueTracker', [
+
+angular
+    .module('montyIssueTracker', [
         'ngRoute',
         'ngAnimate',
         'ngResource',
